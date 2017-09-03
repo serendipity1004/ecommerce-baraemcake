@@ -7,9 +7,22 @@ const MongoStore = require('connect-mongo')(session);
 const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
 const bcrypt = require('bcrypt');
+const hbs = require('handlebars');
 const saltRounds = 10;
 const https = require('https');
 const fs = require('fs');
+const flash = require('connect-flash');
+
+//Tools import
+const {fillCakeData} = require('./tools/fillCakeData');
+
+//Routes
+const shopRoute = require('./routes/shop');
+const loginRoute = require('./routes/login');
+
+//Api Routes
+const loginApi = require('./routes/api/login');
+const shopApi = require('./routes/api/shop');
 
 let handlebars = exphbs.create({
     layoutsDir: path.join(__dirname, "views/layouts"),
@@ -62,6 +75,7 @@ app.use(sessionMiddleware);
 app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use(express.static('views'));
 app.use(express.static('public'));
@@ -76,50 +90,45 @@ app.use((req, res, next) => {
     if (!req.session.cart) {
         req.session.cart = {};
     }
-    console.log('express current cart is');
-    console.log(req.session.cart);
-    console.log('current user is');
-    console.log(req.user);
+    console.log(req.user)
+    console.log(req.session.cart)
     next();
 });
 
 //Models
 const User = require('./models/user');
+const Product = require('./models/product');
 
 //Define Routes
+app.use('/shop', shopRoute);
+app.use('/login', loginRoute);
 
 //Define APIs
+app.use('/api/login', loginApi);
+app.use('/api/shop', shopApi);
 
 app.get('/', (req, res) => {
-    User.find({}, (err, userResult) => {
+    // fillCakeData()
+
+    Product.find({},  (err, result) => {
         if(err) throw err;
 
-        if(userResult.length < 1){
-            bcrypt.hash('password123', saltRounds, (err, hash) => {
-                if(err) throw err;
-
-                let email = 'jihochoi1123@gmail.com';
-                let password = hash;
-                let verified = true;
-
-                let user = new User({
-                    email,
-                    password,
-                    verified
-                });
-
-                user.save((err, result) => {
-                    if(err) throw err;
-                })
-            })
-        }else {
-            res.render('./index', {
-
-            })
-        }
+        res.render('./index', {
+            slideRevolution: true,
+            allProducts: result,
+            newProducts: result,
+            bestSellers: result,
+            recommendedProducts: result,
+            js: ['/index.js'],
+            css: ['/index.css']
+        })
     })
 });
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`listening at ${port}`)
+});
+
+hbs.registerHelper('trueTillIndex', (targetIndex, inputIndex) => {
+    return parseInt(inputIndex) > parseInt(targetIndex) ? false:true
 });

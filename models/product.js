@@ -8,6 +8,7 @@ let productSchema = new Schema(
         category: [String],
         price: {type: Number, required: true},
         largeImagePath: {type: String, required: true},
+        detailsImagePath: [String],
         stock: {type: Number, required: true},
         main: {type: Boolean},
         overviewComments: {type: String, required: true},
