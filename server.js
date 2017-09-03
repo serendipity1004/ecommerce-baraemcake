@@ -87,12 +87,36 @@ app.set('view engine', 'handlebars');
 
 app.use((req, res, next) => {
     res.locals.login = req.isAuthenticated();
+
     if (!req.session.cart) {
         req.session.cart = {};
     }
-    console.log(req.user)
-    console.log(req.session.cart)
-    next();
+
+    let sessionCart = req.session.cart;
+    let prodIds = Object.keys(sessionCart);
+
+    if(prodIds.length > 0){
+        Product.find({_id:{$in:prodIds}}, (err, productResult)=>{
+            if(err) throw err;
+
+
+            for(let i =0; i < productResult.length; i ++){
+                let curProduct = productResult[i];
+
+                curProduct['curQuantity'] = sessionCart[curProduct._id];
+                productResult[i] = curProduct;
+            }
+
+            res.locals.cartProducts = productResult;
+            next();
+        });
+    }else {
+        res.locals.cartProducts = [];
+        console.log(req.user);
+        console.log(req.session.cart);
+        next();
+    }
+
 });
 
 //Models
@@ -120,7 +144,7 @@ app.get('/', (req, res) => {
             bestSellers: result,
             recommendedProducts: result,
             js: ['/index.js'],
-            css: ['/index.css']
+            css: ['/index.css'],
         })
     })
 });

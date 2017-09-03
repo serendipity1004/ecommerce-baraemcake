@@ -27,6 +27,11 @@ router.post('/', passport.authenticate('local', {
     failureFlash: '로그인 정보가 잘못되었습니다'
 }));
 
+router.post('/logout', (req, res)=>{
+    req.logout();
+    res.redirect('/')
+});
+
 router.post('/new', (req, res) => {
     console.log(req.body)
     let lastName = req.body['register-form-last-name'];
@@ -108,6 +113,17 @@ router.get('/verify_email/:hash', (req, res) => {
 
         res.render('./login/verifyEmail/verifyEmail', {
 
+        })
+    })
+});
+
+router.get('/profile', (req, res) => {
+
+    User.findById(req.user, '_id firstName lastName email searchAddress additionalAddress phoneNumber points',(err, result) => {
+        if(err) throw err;
+
+        res.render('./login/profile/profile', {
+            user:result
         })
     })
 });

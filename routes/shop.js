@@ -10,11 +10,13 @@ router.get('/', (req, res) => {
 
 router.get('/details', (req, res) => {
     let prodId = req.query.id;
-    console.log('prodid')
-    console.log(prodId);
-
-    console.log('valid?')
-    mongoose.Types.ObjectId.isValid(prodId)
+    let cart = req.session.cart;
+    let curQuantity;
+    if(cart[prodId] === undefined || cart[prodId] === null){
+        curQuantity = 1;
+    }else {
+        curQuantity = cart[prodId];
+    }
 
     Product.findById(prodId, (err, prodResult) => {
         if(err) throw err;
@@ -22,6 +24,7 @@ router.get('/details', (req, res) => {
         res.render('./shop/details/details', {
             slideRevolution: false,
             product:prodResult,
+            quantity:curQuantity,
             js:['/shop/details/details.js'],
             css:['/shop/details/details.css']
         })
