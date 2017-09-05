@@ -37,9 +37,9 @@ jQuery(document).ready(function ($) {
         })
     });
 
-    $('#header-cart-btn').click(function (e) {
-        e.preventDefault();
-
-        location.href = '/shop/cart'
-    })
+    // $('#header-cart-btn').click(function (e) {
+    //     e.preventDefault();
+    //
+    //     location.href = '/shop/cart'
+    // })
 });

@@ -31,4 +31,36 @@ router.get('/details', (req, res) => {
     });
 });
 
+router.get('/cart', (req, res) => {
+    let cart = req.session.cart;
+
+    let cartKeys = Object.keys(cart);
+
+    Product.find({_id: {$in:cartKeys}}).lean().exec(function (err, productResults) {
+        if(err) throw err;
+
+        for(let index in productResults){
+            let curProduct = productResults[index];
+
+            curProduct['quantity'] = cart[curProduct._id];
+        }
+        res.render('./shop/cart/cart' , {
+            cartProducts:productResults,
+            js:['/shop/cart/cart.js'],
+            css:['/shop/cart/cart.css']
+        })
+    })
+
+    // Product.find({_id: {$in:cartKeys}}, (err, result) => {
+    //     if(err)throw err;
+    //
+    //     let productResults = result.toObject();
+    //
+    //     for(let index in productResults){
+    //         let curProduct = productResults[index];
+    //
+    //         curProduct['quantity'] = cart[curProduct._id];
+    //     }
+});
+
 module.exports = router;

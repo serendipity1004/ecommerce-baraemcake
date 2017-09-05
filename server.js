@@ -156,3 +156,7 @@ app.listen(port, () => {
 hbs.registerHelper('trueTillIndex', (targetIndex, inputIndex) => {
     return parseInt(inputIndex) > parseInt(targetIndex) ? false:true
 });
+
+hbs.registerHelper('calculateTotal', (price, quantity) => {
+    return parseInt(price) * parseInt(quantity);
+});

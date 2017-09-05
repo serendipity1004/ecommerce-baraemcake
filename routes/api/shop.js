@@ -43,8 +43,22 @@ router.post('/cart/retrieve', (req, res) => {
             resultToSend[i].cartQuantity = parseInt(resultToSend[i].cartQuantity, 10);
         }
 
+        console.log(resultToSend)
+
         res.json({cart: resultToSend})
     });
+});
+
+router.post('/cart/remove_product', (req, res) => {
+    let productId = req.body.productId;
+    console.log(req.body)
+    console.log(productId)
+    let cart = req.session.cart;
+    console.log('received')
+
+    delete cart[productId];
+
+    res.json({cart})
 });
 
 module.exports = router;

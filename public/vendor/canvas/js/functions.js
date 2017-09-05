@@ -1701,20 +1701,20 @@ var SEMICOLON = SEMICOLON || {};
         topcart: function () {
 
             $("#top-cart-trigger").click(function (e) {
-                $.post('/api/shop/cart/retrieve', {}, function (returnResult) {
-                    console.log(returnResult['cart'][0]['cartQuantity'])
-                    let products = returnResult['cart'];
-                    console.log(returnResult)
-                    for (let i = 0; i < products.length; i++) {
-                        let curProduct = products[i];
-                        console.log(curProduct['cartQuantity'])
-                    }
-                    $pagemenu.toggleClass('pagemenu-active', false);
-                    $topCart.toggleClass('top-cart-open');
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-
+                // $.post('/api/shop/cart/retrieve', function (returnResult) {
+                //     console.log(returnResult['cart'][0]['cartQuantity']);
+                //     let products = returnResult['cart'];
+                //     console.log(returnResult);
+                //     for (let i = 0; i < products.length; i++) {
+                //         let curProduct = products[i];
+                //         console.log(curProduct['cartQuantity'])
+                //     }
+                //     $pagemenu.toggleClass('pagemenu-active', false);
+                //     $topCart.toggleClass('top-cart-open');
+                //     e.stopPropagation();
+                //     e.preventDefault();
+                // });
+                location.href = '/shop/cart'
             });
 
         }
