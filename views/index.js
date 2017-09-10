@@ -1,13 +1,23 @@
 jQuery('.add-to-cart').click(function (e) {
     e.preventDefault();
 
+    let target = jQuery(this).parent().parent();
+
+    target.addClass('running');
+
+    let clickedBtn = jQuery(this);
+    clickedBtn.attr('disabled', true);
+
     let curProduct = jQuery(this).siblings('.product-id').val();
 
     jQuery.post('/api/shop/cart/add', {
-        itemId:curProduct,
+        itemId: curProduct,
         itemQuantity: 1
     }, function (result) {
-        console.log(result)
+        setTimeout(function () {
+            clickedBtn.attr('disabled',false);
+            target.removeClass('running')
+        }, 500);
     })
 });
 
@@ -80,3 +90,9 @@ tpj(document).ready(function () {
     });
 
 }); //ready
+jQuery('#top-banner').click(function () {
+    jQuery('html, body').animate({
+        scrollTop: jQuery(jQuery(this).attr('href')).offset().top
+    }, 500);
+    return false;
+});

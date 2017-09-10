@@ -96,7 +96,10 @@ app.use((req, res, next) => {
     let prodIds = Object.keys(sessionCart);
 
     if(prodIds.length > 0){
+        console.log(sessionCart)
+        console.log(prodIds)
         Product.find({_id:{$in:prodIds}}, (err, productResult)=>{
+            console.log(err)
             if(err) throw err;
 
 

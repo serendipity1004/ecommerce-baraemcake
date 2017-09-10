@@ -210,7 +210,7 @@
 
     <div class="content-wrap">
         <!--Ad Banner-->
-        <a class="button button-full button-purple center tright header-stick bottommargin-lg">
+        <a id="top-banner" class="button button-full button-purple center tright header-stick bottommargin-lg" href="#all-products">
             <div class="container clearfix">
                 9월 20일 ~ 10월 10일 추석 이벤트 저렴한 가격에 <strong>사러가기!</strong> <i class="icon-caret-right" style="top:4px;"></i>
             </div>
@@ -350,16 +350,17 @@
                     <!--New Products-->
                     <div class="tab-content clearfix" id="new-products">
 
-                        <div id="shop" class="shop clearfix">
+                        <div class="shop clearfix">
 
                             {{#each newProducts}}
                                 {{#if (trueTillIndex 3 @index)}}
                                     <div class="product clearfix">
-                                        <div class="product-image">
+                                        <div class="product-image ld-over">
                                             <a href="/shop/details/?id={{_id}}"><img src="{{largeImagePath}}"
                                                              alt="Checked Short Dress"></a>
                                             <a href="/shop/details/?id={{_id}}"><img src="{{largeImagePath}}"
                                                              alt="Checked Short Dress"></a>
+                                            <div class="ld ld-ring ld-spin"></div>
                                             <div class="product-overlay">
                                                 <a href="" class="add-to-cart"><i class="icon-shopping-cart"></i><span> 장바구니에 넣기</span></a>
                                                 <a href="/shop/details/?id={{_id}}"
@@ -393,16 +394,18 @@
                     <!--Best Sellers-->
                     <div class="tab-content clearfix" id="best-sellers">
 
-                        <div id="shop" class="shop clearfix">
+                        <div class="shop clearfix">
 
                             {{#each bestSellers}}
                                 {{#if (trueTillIndex 3 @index)}}
                                     <div class="product clearfix">
-                                        <div class="product-image">
+                                        <div class="product-image ld-over">
                                             <a href="/shop/details/?id={{_id}}"><img src="{{largeImagePath}}"
                                                                                      alt="Checked Short Dress"></a>
                                             <a href="/shop/details/?id={{_id}}"><img src="{{largeImagePath}}"
                                                                                      alt="Checked Short Dress"></a>
+                                            <div class="ld ld-ring ld-spin"></div>
+
                                             <div class="product-overlay">
                                                 <a href="" class="add-to-cart"><i class="icon-shopping-cart"></i><span> 장바구니에 넣기</span></a>
                                                 <a href="/shop/details/?id={{_id}}"
@@ -434,16 +437,18 @@
                     <!--Recommended Products-->
                     <div class="tab-content clearfix" id="recommended-products">
 
-                        <div id="shop" class="shop clearfix">
+                        <div class="shop clearfix">
 
                             {{#each recommendedProducts}}
                                 {{#if (trueTillIndex 3 @index)}}
                                     <div class="product clearfix">
-                                        <div class="product-image">
+                                        <div class="product-image ld-over">
                                             <a href="/shop/details/?id={{_id}}"><img src="{{largeImagePath}}"
                                                                                      alt="Checked Short Dress"></a>
                                             <a href="/shop/details/?id={{_id}}"><img src="{{largeImagePath}}"
                                                                                      alt="Checked Short Dress"></a>
+                                            <div class="ld ld-ring ld-spin"></div>
+
                                             <div class="product-overlay">
                                                 <a href="" class="add-to-cart"><i class="icon-shopping-cart"></i><span> 장바구니에 넣기</span></a>
                                                 <a href="/shop/details/?id={{_id}}"
@@ -601,16 +606,19 @@
     <div class="clear"></div>
 
     <div class="container clearfix">
-        <div id="shop" class="shop grid-container clearfix" data-layout="fitRows">
+        <div id="all-products" class="shop grid-container clearfix" data-layout="fitRows">
 
             {{#each allProducts}}
                 <div class="product clearfix">
-                    <div class="product-image">
+                    <div class="product-image ld-over">
                         <a href="/shop/details/?id={{_id}}"><img src="{{largeImagePath}}" alt="Checked Short Dress"></a>
                         <a href="/shop/details/?id={{_id}}"><img src="{{largeImagePath}}" alt="Checked Short Dress"></a>
+                        <div class="ld ld-ring ld-spin"></div>
+
                         <div class="product-overlay">
                             <a href="" class="add-to-cart"><i
                                     class="icon-shopping-cart"></i><span> 장바구니에 넣기</span></a>
+                            <input class="product-id" type="hidden" value="{{_id}}">
                             <a href="/shop/details/?id={{_id}}" class="item-quick-view"><i
                                     class="icon-zoom-in2"></i><span> 자세히 보기</span></a>
                         </div>
