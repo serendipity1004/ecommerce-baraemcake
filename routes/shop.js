@@ -46,6 +46,8 @@ router.get('/cart', (req, res) => {
         }
         res.render('./shop/cart/cart' , {
             cartProducts:productResults,
+            postCode:true,
+            payModule:true,
             js:['/shop/cart/cart.js'],
             css:['/shop/cart/cart.css']
         })

@@ -37,6 +37,12 @@ jQuery(document).ready(function ($) {
         })
     });
 
+    $('#header-register-btn').click(function (e) {
+        e.preventDefault();
+
+        location.href = '/login'
+    })
+
     // $('#header-cart-btn').click(function (e) {
     //     e.preventDefault();
     //

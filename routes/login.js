@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
     res.render('./login/login', {
         error: errMessage,
-        login:true,
+        postCode:true,
         js:['/login/login.js'],
         css: ['/login/login.css']
     })
