@@ -96,3 +96,7 @@ jQuery('#top-banner').click(function () {
     }, 500);
     return false;
 });
+
+// jQuery(document).ready(function ($) {
+//     $('#why-baraem-header').textillate({in:{effect:'rollIn'}})
+// });

@@ -128,3 +128,56 @@ $('#pay-test-btn').click(function (e) {
     });
 })
 
+jQuery('#billing-form').validate({
+    rules: {
+        'last-name':{
+            required: true,
+            minlength:1
+        },
+        'first-name':{
+            required:true,
+            minlength:1
+        },
+        'register-form-address':{
+            required:true,
+        },
+        'register-form-additional-address':{
+            required:true,
+        },
+        'email':{
+            required:true,
+            email:true
+        },
+        'phone-number': {
+            required:true,
+            number:true
+        }
+    },
+    messages: {
+        'last-name':{
+            required: '성을 입력해주세요',
+            minlength:'최소 1자를 입력해주세요'
+        },
+        'first-name':{
+            required:'이름을 입력해주세요',
+            minlength:'최소 1자를 입력해주세요'
+        },
+        'register-form-address':{
+            required:'주소를 입력해주세요',
+        },
+        'register-form-additional-address':{
+            required:'추가 주소를 입력해주세요',
+        },
+        'email':{
+            required:'이메일을 입력해주세요',
+            email:'올바른 이메일 형식을 입력해주세요'
+        },
+        'phone-number': {
+            required:'전화번호를 입력해주세요',
+            number:'숫자만 입력해주세요'
+        }
+    },
+    submitHandler: function (form) {
+        form.submit();
+    }
+});

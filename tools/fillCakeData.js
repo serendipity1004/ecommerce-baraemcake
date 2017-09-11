@@ -195,7 +195,7 @@ const fillCakeData = () => {
         detailsImagePath,
         detailedDescription,
         overviewComments
-    })
+    });
 
     product.save((err) =>{
         console.log(err)

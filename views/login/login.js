@@ -89,9 +89,11 @@ jQuery('#register-form').validate({
     rules: {
         'register-form-last-name':{
             required:true,
+            minlength:1
         },
         'register-form-first-name': {
             required:true,
+            minlength:1,
         },
         'register-form-email': {
             required:true,
@@ -117,6 +119,41 @@ jQuery('#register-form').validate({
             equalTo:'#register-form-password',
             minlength:8,
             maxlength:16
+        }
+    },
+    messages: {
+        'register-form-last-name': {
+            required: '성을 입력해 주세요',
+            minlength: '최소 1자를 입력해주세요'
+        },
+        'register-form-first-name': {
+            required: '이름을 입력해 주세요',
+            minlength: '최소 1글자를 입력해주세요',
+        },
+        'register-form-email': {
+            required: '이메일을 입력해주세요',
+            email: '이메일 형식이 잘못되었습니다'
+        },
+        'register-form-address': {
+            required:'주소찾기를 눌러주세요'
+        },
+        'register-form-additional-address': {
+            required:'추가 주소를 입력해주세요',
+        },
+        'register-form-phone':{
+            required:'전화번호를 입력해주세요',
+            number:'숫자만 입력해주세요'
+        },
+        'register-form-password': {
+            required:'비밀번호를 입력해주세요',
+            minlength:'최소 8자를 입력해주세요',
+            maxlength:'최대 16자를 입력해주세요'
+        },
+        'register-form-repassword':{
+            required:'확인 비밀번호를 입력해주세요',
+            equalTo:'같은 비밀번호를 입력해주세요',
+            minlength:'최소 8자를 입력해주세요',
+            maxlength:'최대 16자를 입력해주세요'
         }
     },
     submitHandler: function (form) {

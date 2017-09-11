@@ -11029,9 +11029,9 @@ label.error {
 	font-weight: 400;
 }
 
-label.error { display: none !important; }
+/*label.error { display: none !important; }*/
 
-.show-error-msg + label.error { display: block !important; }
+/*.show-error-msg + label.error { display: block !important; }*/
 
 input[type=checkbox]:not(:checked) + label.error { display: block !important; }
 
