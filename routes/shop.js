@@ -6,6 +6,15 @@ const Product = require('../models/product');
 
 router.get('/', (req, res) => {
 
+    Product.find({}, (err, productResult) => {
+        if(err) throw err;
+
+        res.render('./shop/shop', {
+            products:productResult,
+            css: ['/shop/shop.css'],
+            js: ['/shop/shop.js']
+        })
+    })
 });
 
 router.get('/details', (req, res) => {
