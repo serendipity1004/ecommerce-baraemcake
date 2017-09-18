@@ -1,0 +1,22 @@
+#perks {
+    background-color: #282828;
+    color: #999;
+}
+
+#perks h3{
+    color:#999 !important;
+}
+
+#perks i {
+    color: #999 !important;
+}
+
+#why-baraem-header-container {
+    display: inline-block;
+    width: auto;
+    content: ' ';
+}
+
+h1:empty:before {
+    content:'|';
+}

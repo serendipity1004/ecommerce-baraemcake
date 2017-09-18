@@ -163,3 +163,7 @@ hbs.registerHelper('trueTillIndex', (targetIndex, inputIndex) => {
 hbs.registerHelper('calculateTotal', (price, quantity) => {
     return parseInt(price) * parseInt(quantity);
 });
+
+hbs.registerHelper('evenOrNot', (index) => {
+    return index % 2 === 0;
+});

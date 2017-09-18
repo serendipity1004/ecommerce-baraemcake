@@ -97,6 +97,15 @@ jQuery('#top-banner').click(function () {
     return false;
 });
 
+let typed = new Typed('#why-baraem-header', {
+    strings:['바램떡 이여야만 하는 이유', '맛있으니까 ^200'],
+    typeSpeed:100,
+    backSpeed:50,
+    loop:true,
+    showCursor:false,
+    backDelay:1500
+});
+
 // jQuery(document).ready(function ($) {
 //     $('#why-baraem-header').textillate({in:{effect:'rollIn'}})
 // });

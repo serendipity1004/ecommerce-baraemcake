@@ -117,7 +117,13 @@ router.get('/verify_email/:hash', (req, res) => {
     })
 });
 
-router.get('/profile', (req, res) => {
+router.get('/profile', (req, res, next)=>{
+    if(req.isAuthenticated()){
+        next()
+    }else {
+        res.redirect('/login')
+    }
+},(req, res) => {
 
     User.findById(req.user, '_id firstName lastName email searchAddress additionalAddress phoneNumber points',(err, result) => {
         if(err) throw err;

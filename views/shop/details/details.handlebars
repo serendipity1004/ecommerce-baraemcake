@@ -17,25 +17,16 @@
                                 <div class="fslider" data-pagi="false" data-arrows="false" data-thumbs="true">
                                     <div class="flexslider">
                                         <div class="slider-wrap" data-lightbox="gallery">
-                                            <div class="slide"
-                                                 data-thumb="{{detailsImagePath.[0]}}"><a
-                                                    href="/vendor/canvas/images/shop/dress/3.jpg"
-                                                    title="Pink Printed Dress - Front View"
-                                                    data-lightbox="gallery-item"><img
-                                                    src="{{detailsImagePath.[0]}}"
-                                                    alt="Pink Printed Dress"></a></div>
-                                            <div class="slide"
-                                                 data-thumb="{{detailsImagePath.[0]}}"><a
-                                                    href="/vendor/canvas/images/shop/dress/3-1.jpg"
-                                                    title="Pink Printed Dress - Side View" data-lightbox="gallery-item"><img
-                                                    src="{{detailsImagePath.[0]}}"
-                                                    alt="Pink Printed Dress"></a></div>
-                                            <div class="slide"
-                                                 data-thumb="{{detailsImagePath.[0]}}"><a
-                                                    href="/vendor/canvas/images/shop/dress/3-2.jpg"
-                                                    title="Pink Printed Dress - Back View" data-lightbox="gallery-item"><img
-                                                    src="{{detailsImagePath.[0]}}"
-                                                    alt="Pink Printed Dress"></a></div>
+                                            {{#each detailsImagePath}}
+                                                <div class="slide"
+                                                     data-thumb="{{this}}"><a
+                                                        href="{{this}}"
+                                                        title="{{../name}}"
+                                                        data-lightbox="gallery-item"><img
+                                                        src="{{this}}"
+                                                        alt="{{../name}}"></a></div>
+                                            {{/each}}
+
                                         </div>
                                     </div>
                                 </div>

@@ -1,88 +1,3 @@
-<!-- Top Bar
-============================================= -->
-
-<div id="top-bar" class="hidden-xs">
-
-    <div class="container clearfix">
-
-        <div class="col_half nobottommargin">
-
-            <p class="nobottommargin"><strong>Call:</strong> 1800-547-2145 | <strong>Email:</strong>
-                customer.service@baraemcake.com</p>
-
-        </div>
-        <div class="col_half col_last fright nobottommargin">
-
-            <!-- Top Links
-            ============================================= -->
-
-            <div class="top-links">
-                <ul>
-                    <!--<li><a href="#">USD</a>-->
-                    <!--<ul>-->
-                    <!--<li><a href="#">EUR</a></li>-->
-                    <!--<li><a href="#">AUD</a></li>-->
-                    <!--<li><a href="#">GBP</a></li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    <!--<li><a href="#">EN</a>-->
-                    <!--<ul>-->
-                    <!--<li><a href="#"><img src="/vendor/canvas/images/icons/flags/french.png"-->
-                    <!--alt="French"> FR</a></li>-->
-                    <!--<li><a href="#"><img src="/vendor/canvas/images/icons/flags/italian.png"-->
-                    <!--alt="Italian"> IT</a></li>-->
-                    <!--<li><a href="#"><img src="/vendor/canvas/images/icons/flags/german.png"-->
-                    <!--alt="German"> DE</a></li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    {{#if login}}
-                        <li><a href="/login/profile">내 계정</a>
-                            <div class="top-link-section">
-                                <form id="top-login" role="form" method="post" action="/login">
-                                    <button id="header-logout-btn" class="btn btn-danger btn-block" type="submit">로그아웃
-                                    </button>
-                                </form>
-                            </div>
-                        </li>
-                    {{else}}
-                        <li><a href="/login">로그인</a>
-                            <div class="top-link-section">
-                                <form id="top-login" role="form" method="post" action="/login">
-                                    <div class="input-group" id="top-login-username">
-                                        <span class="input-group-addon"><i class="icon-user"></i></span>
-                                        <input name="username" id="header-email" type="email" class="form-control"
-                                               placeholder="이메일"
-                                               required="">
-                                    </div>
-                                    <div class="input-group" id="top-login-password">
-                                        <span class="input-group-addon"><i class="icon-key"></i></span>
-                                        <input name="password" id="header-password" type="password" class="form-control"
-                                               placeholder="비밀번호"
-                                               required="">
-                                    </div>
-                                    <label class="checkbox">
-                                        <input type="checkbox" value="remember-me"> 기억하기
-                                    </label>
-                                    <button id="header-login-btn" class="btn btn-danger btn-block" type="submit">로그인
-                                    </button>
-                                    <button id="header-register-btn" class="btn btn-primary btn-block" type="submit">
-                                        회원가입
-                                    </button>
-                                </form>
-                            </div>
-                        </li>
-                    {{/if}}
-                </ul>
-            </div><!-- .top-links end -->
-
-        </div>
-
-    </div>
-
-</div><!-- #top-bar end -->
-
-<!-- Header
-============================================= -->
 <header id="header">
 
     <div id="header-wrap">
@@ -93,100 +8,44 @@
 
             <!-- Logo
             ============================================= -->
-            <div id="logo" >
-                <!--<a href="/" class="standard-logo" data-dark-logo="/vendor/canvas/images/logo-dark.png"><img-->
-                        <!--src="/vendor/canvas/images/logo.png" alt="Canvas Logo"></a>-->
-                <!--<a href="/" class="retina-logo"-->
-                   <!--data-dark-logo="/vendor/canvas/images/logo-dark@2x.png"><img-->
-                        <!--src="/vendor/canvas/images/logo@2x.png" alt="Canvas Logo"></a>-->
-                <h1 style="margin: auto;">Baraem</h1>
+            <div id="logo">
+                <a href="index.html" class="standard-logo" data-dark-logo="/vendor/canvas/images/logo-dark.png"><img
+                        src="/vendor/canvas/images/logo-resto.png" alt="Canvas Logo"></a>
+                <a href="index.html" class="retina-logo" data-dark-logo="/vendor/canvas/images/logo-dark@2x.png"><img
+                        src="/vendor/canvas/images/logo@2x.png" alt="Canvas Logo"></a>
             </div><!-- #logo end -->
 
             <!-- Primary Navigation
             ============================================= -->
-            <nav id="primary-menu">
+            <nav id="primary-menu" class="style-5">
 
-                <ul>
-                    <li class="current">
-                        <a href="/">
-                            <div>홈</div>
-                        </a>
+                <ul class="norightborder norightpadding norightmargin">
+                    <li><a href="/">
+                        <div><i class="icon-home2"></i>홈</div>
+                    </a>
                     </li>
-                    <!-- Mega Menu
-                    ============================================= -->
-                    <li class="mega-menu">
-                        <a href="/shop">
-                            <div>쇼핑하기</div>
-                        </a>
-                    </li><!-- .mega-menu end -->
-                    <!--<li>-->
-                        <!--<a href="#">-->
-                            <!--<div>블로그</div>-->
-                        <!--</a>-->
-                    <!--</li>&lt;!&ndash; .mega-menu end &ndash;&gt;-->
-                    <!--<li>-->
-                        <!--<a href="#">-->
-                            <!--<div>갤러리</div>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="#">-->
-                            <!--<div>소개</div>-->
-                            <!--<span>Awesome Works</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<a href="#">-->
-                            <!--<div>연락처</div>-->
-                            <!--<span>Latest News</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li><a href="#">-->
-                        <!--<div>자주하는 질문</div>-->
-                    <!--</a>-->
-                    <!--</li>-->
+                    <li><a href="/shop">
+                        <div><i class="icon-file-alt"></i>메뉴</div>
+                    </a></li>
+                    <li><a href="#">
+                        <div><i class="icon-picture"></i>갤러리</div>
+                    </a></li>
+                    <li><a href="#">
+                        <div><i class="icon-pencil2"></i>블로그</div>
+                    </a></li>
+                    <li><a href="#">
+                        <div><i class="icon-map-marker2"></i>연락처</div>
+                    </a></li>
+                    <li><a href="/login/profile">
+                        <div><i class="icon-user"></i>내계정</div>
+                    </a></li>
+                    <li><a href="/login">
+                        <div><i class="icon-th"></i>로그인</div>
+                    </a></li>
+                    <li><a href="/shop/cart">
+                        <div><i class="icon-gift"></i>장바구니</div>
+                    </a> </li>
                 </ul>
-
-                <!-- Top Cart
-                ============================================= -->
-                <div id="top-cart">
-                    <a href="/shop/cart" id="top-cart-trigger"><i class="icon-shopping-cart"></i></a>
-                    <div class="top-cart-content">
-                        <div class="top-cart-title">
-                            <h4>장바구니</h4>
-                        </div>
-                        <div class="top-cart-items">
-                            {{#each cartProducts}}
-                                <div class="top-cart-item clearfix">
-                                    <div class="top-cart-item-image">
-                                        <a href="#"><img src="{{largeImagePath}}"
-                                                         alt="{{name}}"/></a>
-                                    </div>
-                                    <div class="top-cart-item-desc">
-                                        <a href="#">{{name}}</a>
-                                        <span class="top-cart-item-price">{{price}}</span>
-                                        <span class="top-cart-item-quantity">{{curQuantity}}</span>
-                                    </div>
-                                </div>
-                            {{/each}}
-                        </div>
-                        <div class="top-cart-action clearfix">
-                            <span class="fleft top-checkout-price">$114.95</span>
-                            <button id="header-cart-btn" class="button button-3d button-small nomargin fright">장바구니 보기</button>
-                        </div>
-                    </div>
-                </div><!-- #top-cart end -->
-
-                <!-- Top Search
-                ============================================= -->
-                <!--<div id="top-search">-->
-                <!--<a href="#" id="top-search-trigger"><i class="icon-search3"></i><i-->
-                <!--class="icon-line-cross"></i></a>-->
-                <!--<form action="search.html" method="get">-->
-                <!--<input type="text" name="q" class="form-control" value=""-->
-                <!--placeholder="Type &amp; Hit Enter..">-->
-                <!--</form>-->
-                <!--</div>&lt;!&ndash; #top-search end &ndash;&gt;-->
 
             </nav><!-- #primary-menu end -->
 
@@ -195,3 +54,201 @@
     </div>
 
 </header><!-- #header end -->
+
+<!--&lt;!&ndash; Top Bar-->
+<!--============================================= &ndash;&gt;-->
+
+<!--<div id="top-bar" class="hidden-xs">-->
+
+<!--<div class="container clearfix">-->
+
+<!--<div class="col_half nobottommargin">-->
+
+<!--<p class="nobottommargin"><strong>Call:</strong> 1800-547-2145 | <strong>Email:</strong>-->
+<!--customer.service@baraemcake.com</p>-->
+
+<!--</div>-->
+<!--<div class="col_half col_last fright nobottommargin">-->
+
+<!--&lt;!&ndash; Top Links-->
+<!--============================================= &ndash;&gt;-->
+
+<!--<div class="top-links">-->
+<!--<ul>-->
+<!--&lt;!&ndash;<li><a href="#">USD</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<ul>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="#">EUR</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="#">AUD</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="#">GBP</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;</li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="#">EN</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<ul>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="#"><img src="/vendor/canvas/images/icons/flags/french.png"&ndash;&gt;-->
+<!--&lt;!&ndash;alt="French"> FR</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="#"><img src="/vendor/canvas/images/icons/flags/italian.png"&ndash;&gt;-->
+<!--&lt;!&ndash;alt="Italian"> IT</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="#"><img src="/vendor/canvas/images/icons/flags/german.png"&ndash;&gt;-->
+<!--&lt;!&ndash;alt="German"> DE</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--{{#if login}}-->
+<!--<li><a href="/login/profile">내 계정</a>-->
+<!--<div class="top-link-section">-->
+<!--<form id="top-login" role="form" method="post" action="/login">-->
+<!--<button id="header-logout-btn" class="btn btn-danger btn-block" type="submit">로그아웃-->
+<!--</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--</li>-->
+        <!--{{else}}-->
+<!--<li><a href="/login">로그인</a>-->
+<!--<div class="top-link-section">-->
+<!--<form id="top-login" role="form" method="post" action="/login">-->
+<!--<div class="input-group" id="top-login-username">-->
+<!--<span class="input-group-addon"><i class="icon-user"></i></span>-->
+<!--<input name="username" id="header-email" type="email" class="form-control"-->
+<!--placeholder="이메일"-->
+<!--required="">-->
+<!--</div>-->
+<!--<div class="input-group" id="top-login-password">-->
+<!--<span class="input-group-addon"><i class="icon-key"></i></span>-->
+<!--<input name="password" id="header-password" type="password" class="form-control"-->
+<!--placeholder="비밀번호"-->
+<!--required="">-->
+<!--</div>-->
+<!--<label class="checkbox">-->
+<!--<input type="checkbox" value="remember-me"> 기억하기-->
+<!--</label>-->
+<!--<button id="header-login-btn" class="btn btn-danger btn-block" type="submit">로그인-->
+<!--</button>-->
+<!--<button id="header-register-btn" class="btn btn-primary btn-block" type="submit">-->
+<!--회원가입-->
+<!--</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--</li>-->
+        <!--{{/if}}-->
+<!--</ul>-->
+<!--</div>&lt;!&ndash; .top-links end &ndash;&gt;-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</div>&lt;!&ndash; #top-bar end &ndash;&gt;-->
+
+<!--&lt;!&ndash; Header-->
+<!--============================================= &ndash;&gt;-->
+<!--<header id="header">-->
+
+<!--<div id="header-wrap">-->
+
+<!--<div class="container clearfix">-->
+
+<!--<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>-->
+
+<!--&lt;!&ndash; Logo-->
+<!--============================================= &ndash;&gt;-->
+<!--<div id="logo" >-->
+<!--&lt;!&ndash;<a href="/" class="standard-logo" data-dark-logo="/vendor/canvas/images/logo-dark.png"><img&ndash;&gt;-->
+<!--&lt;!&ndash;src="/vendor/canvas/images/logo.png" alt="Canvas Logo"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="/" class="retina-logo"&ndash;&gt;-->
+<!--&lt;!&ndash;data-dark-logo="/vendor/canvas/images/logo-dark@2x.png"><img&ndash;&gt;-->
+<!--&lt;!&ndash;src="/vendor/canvas/images/logo@2x.png" alt="Canvas Logo"></a>&ndash;&gt;-->
+<!--<h1 style="margin: auto;">Baraem</h1>-->
+<!--</div>&lt;!&ndash; #logo end &ndash;&gt;-->
+
+<!--&lt;!&ndash; Primary Navigation-->
+<!--============================================= &ndash;&gt;-->
+<!--<nav id="primary-menu">-->
+
+<!--<ul>-->
+<!--<li class="current">-->
+<!--<a href="/">-->
+<!--<div>홈</div>-->
+<!--</a>-->
+<!--</li>-->
+<!--&lt;!&ndash; Mega Menu-->
+<!--============================================= &ndash;&gt;-->
+<!--<li class="mega-menu">-->
+<!--<a href="/shop">-->
+<!--<div>쇼핑하기</div>-->
+<!--</a>-->
+<!--</li>&lt;!&ndash; .mega-menu end &ndash;&gt;-->
+<!--&lt;!&ndash;<li>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+<!--&lt;!&ndash;<div>블로그</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</li>&lt;!&ndash; .mega-menu end &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<li>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+<!--&lt;!&ndash;<div>갤러리</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+<!--&lt;!&ndash;<div>소개</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<span>Awesome Works</span>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#">&ndash;&gt;-->
+<!--&lt;!&ndash;<div>연락처</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<span>Latest News</span>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</li>&ndash;&gt;-->
+<!--&lt;!&ndash;<li><a href="#">&ndash;&gt;-->
+<!--&lt;!&ndash;<div>자주하는 질문</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</li>&ndash;&gt;-->
+<!--</ul>-->
+
+<!--&lt;!&ndash; Top Cart-->
+<!--============================================= &ndash;&gt;-->
+<!--<div id="top-cart">-->
+<!--<a href="/shop/cart" id="top-cart-trigger"><i class="icon-shopping-cart"></i></a>-->
+<!--<div class="top-cart-content">-->
+<!--<div class="top-cart-title">-->
+<!--<h4>장바구니</h4>-->
+<!--</div>-->
+<!--<div class="top-cart-items">-->
+        <!--{{#each cartProducts}}-->
+<!--<div class="top-cart-item clearfix">-->
+<!--<div class="top-cart-item-image">-->
+<!--<a href="#"><img src="{{largeImagePath}}"-->
+<!--alt="{{name}}"/></a>-->
+<!--</div>-->
+<!--<div class="top-cart-item-desc">-->
+<!--<a href="#">{{name}}</a>-->
+<!--<span class="top-cart-item-price">{{price}}</span>-->
+<!--<span class="top-cart-item-quantity">{{curQuantity}}</span>-->
+<!--</div>-->
+<!--</div>-->
+        <!--{{/each}}-->
+<!--</div>-->
+<!--<div class="top-cart-action clearfix">-->
+<!--<span class="fleft top-checkout-price">$114.95</span>-->
+<!--<button id="header-cart-btn" class="button button-3d button-small nomargin fright">장바구니 보기</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>&lt;!&ndash; #top-cart end &ndash;&gt;-->
+
+<!--&lt;!&ndash; Top Search-->
+<!--============================================= &ndash;&gt;-->
+<!--&lt;!&ndash;<div id="top-search">&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" id="top-search-trigger"><i class="icon-search3"></i><i&ndash;&gt;-->
+<!--&lt;!&ndash;class="icon-line-cross"></i></a>&ndash;&gt;-->
+<!--&lt;!&ndash;<form action="search.html" method="get">&ndash;&gt;-->
+<!--&lt;!&ndash;<input type="text" name="q" class="form-control" value=""&ndash;&gt;-->
+<!--&lt;!&ndash;placeholder="Type &amp; Hit Enter..">&ndash;&gt;-->
+<!--&lt;!&ndash;</form>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&lt;!&ndash; #top-search end &ndash;&gt;&ndash;&gt;-->
+
+<!--</nav>&lt;!&ndash; #primary-menu end &ndash;&gt;-->
+
+<!--</div>-->
+
+<!--</div>-->
+
+<!--</header>&lt;!&ndash; #header end &ndash;&gt;-->

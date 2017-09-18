@@ -3,7 +3,7 @@ let Schema = mongoose.Schema;
 
 let productSchema = new Schema(
     {
-        name: {type: String, required: true, unique: true},
+        name: {type: String, required: true},
         group: {type: String, required: true},
         category: [String],
         price: {type: Number, required: true},
