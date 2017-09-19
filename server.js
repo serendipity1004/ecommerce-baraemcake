@@ -137,19 +137,27 @@ app.use('/api/shop', shopApi);
 app.get('/', (req, res) => {
     // fillCakeData()
 
-    Product.find({},  (err, result) => {
+    Product.findOneAndUpdate({name: '바램 두텁 떡'}, {$set:{detailedDescription:'왕의 탄신일에 빠짐없이 올랐던 떡 \\n 흑미, 쑥 , 호박 의 세가지 맛으로 구성되어 있고 견과류가 들어간 소는 고소한 맛이 고급스러움을 더합니다.\\n궁중의 떡으로 맛과 향이 좋고, 만드는 수고와 정성을 들여야 하는 만큼 맛도 훌륭합니다'}}, {new:true}, (err, productResult) => {
         if(err) throw err;
 
-        res.render('./index', {
-            slideRevolution: true,
-            allProducts: result,
-            newProducts: result,
-            bestSellers: result,
-            recommendedProducts: result,
-            js: ['/index.js'],
-            css: ['/index.css'],
+        console.log(productResult)
+        Product.find({},  (err, result) => {
+            if(err) throw err;
+
+            for(let i = 0; i < result.length; i ++){
+                console.log(result[i].detailedDescription);
+            }
+            res.render('./index', {
+                slideRevolution: true,
+                allProducts: result,
+                newProducts: result,
+                bestSellers: result,
+                recommendedProducts: result,
+                js: ['/index.js'],
+                css: ['/index.css'],
+            })
         })
-    })
+    });
 });
 
 app.listen(port, () => {
