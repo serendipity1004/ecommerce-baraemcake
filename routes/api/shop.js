@@ -61,4 +61,16 @@ router.post('/cart/remove_product', (req, res) => {
     res.json({cart})
 });
 
+router.post('/details/update', (req, res) => {
+    let updateItem = req.body.productDetails;
+    let id = req.body.id;
+
+    Product.findByIdAndUpdate(id,
+        {
+            $set: updateItem
+        }, {new:true}, (err, result)=>{
+            res.json(result)
+        })
+});
+
 module.exports = router;

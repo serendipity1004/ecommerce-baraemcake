@@ -11,12 +11,14 @@
     color: #999 !important;
 }
 
-#why-baraem-header-container {
-    display: inline-block;
-    width: auto;
-    content: ' ';
+.typed:empty:before {
+    content:'|';
 }
 
-h1:empty:before {
-    content:'|';
+.product-name-index-page{
+    color: #290B0B !important;
+}
+
+.product-price-index-page{
+    color: #FF7043 !important;
 }

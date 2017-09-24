@@ -1,3 +1,9 @@
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body{
+    font-family: 'Jeju Gothic', Serif !important;
+}
+
 #header-nav-icon-list li div{
     color: #dadada;
 }

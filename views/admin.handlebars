@@ -1,0 +1,23 @@
+<div class="container">
+    {{#each products}}
+        <div class="each-product">
+            <div class="col_full">
+                <label for="name">Name : </label>
+                <input type="text" name="name" value="{{name}}"
+                       class="sm-form-control name"/>
+            </div>
+            <div class="col_full">
+                <label for="overview-comments">Overview Comments : </label>
+                <input type="text" name="overview-comments" value="{{overviewComments}}"
+                       class="sm-form-control overview-comments"/>
+            </div>
+            <div class="col_full">
+                <label for="detailed-description">Detailed Description : </label>
+                <input type="text" name="detailed-description" value="{{detailedDescription}}"
+                       class="sm-form-control detailed-description"/>
+            </div>
+            <button class="btn btn-danger save-btn">Save</button>
+            <input type="hidden" class="product-id" value="{{_id}}">
+        </div>
+    {{/each}}
+</div>

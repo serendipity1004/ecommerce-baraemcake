@@ -9,9 +9,9 @@
             <!-- Logo
             ============================================= -->
             <div id="logo">
-                <a href="index.html" class="standard-logo" data-dark-logo="/vendor/canvas/images/logo-dark.png"><img
+                <a href="/" class="standard-logo" data-dark-logo="/vendor/canvas/images/logo-dark.png"><img
                         src="/images/logo.png" alt="Canvas Logo"></a>
-                <a href="index.html" class="retina-logo" data-dark-logo="/vendor/canvas/images/logo-dark@2x.png"><img
+                <a href="/" class="retina-logo" data-dark-logo="/vendor/canvas/images/logo-dark@2x.png"><img
                         src="/images/logo.png" alt="Canvas Logo"></a>
             </div><!-- #logo end -->
 
@@ -44,7 +44,7 @@
                     </a></li>
                     <li><a href="/shop/cart">
                         <div><i class="icon-gift"></i>장바구니</div>
-                    </a> </li>
+                    </a></li>
                 </ul>
 
             </nav><!-- #primary-menu end -->
@@ -54,6 +54,50 @@
     </div>
 
 </header><!-- #header end -->
+
+{{#if globalSlider}}
+    <section id="slider" class="slider-parallax swiper_wrapper full-screen clearfix" data-autoplay="7000"
+             data-speed="650"
+             data-loop="true">
+
+        <div class="slider-parallax-inner">
+
+            <div class="swiper-container swiper-parent">
+                <div class="swiper-wrapper">
+                    {{#each globalAllProducts}}
+
+                        <div class="swiper-slide dark" style="background-image: url('{{largeImagePath}}') !important;">
+                            <div class="darken-background" style="background: rgba(0,0,0,0.5); height: inherit;">
+                                <div class="container clearfix">
+                                    <div class="slider-caption slider-caption-center">
+                                        <h2 data-caption-animate="fadeInUp">{{name}}</h2>
+                                        <p data-caption-animate="fadeInUp" data-caption-delay="200">{{{newLineToHtml
+                                                overviewComments}}}</p>
+                                        <a href="/shop/details/?id={{_id}}"
+                                           class="button button-desc button-border button-rounded center button-red">지금
+                                            사러가기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+
+                </div>
+                <div id="slider-arrow-left"><i class="icon-angle-left"></i></div>
+                <div id="slider-arrow-right"><i class="icon-angle-right"></i></div>
+                <div id="slide-number">
+                    <div id="slide-number-current"></div>
+                    <span>/</span>
+                    <div id="slide-number-total"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </div>
+
+    </section>
+{{/if}}
+
 
 <!--&lt;!&ndash; Top Bar-->
 <!--============================================= &ndash;&gt;-->

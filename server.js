@@ -88,38 +88,51 @@ app.set('view engine', 'handlebars');
 app.use((req, res, next) => {
     res.locals.login = req.isAuthenticated();
 
-    if (!req.session.cart) {
-        req.session.cart = {};
-    }
+    Product.find({}, '_id name price largeImagePath overviewComments', (err, allProducts) => {
+        if (err) throw err;
 
-    let sessionCart = req.session.cart;
-    let prodIds = Object.keys(sessionCart);
+        res.locals.globalSlider = true;
 
-    if(prodIds.length > 0){
-        console.log(sessionCart)
-        console.log(prodIds)
-        Product.find({_id:{$in:prodIds}}, (err, productResult)=>{
-            console.log(err)
-            if(err) throw err;
+        if(req.url.startsWith('/shop/details') || req.url.startsWith('/shop/cart') || req.url.startsWith('/profile') || req.url.startsWith('/login') || req.url.startsWith('/admin')){
+            res.locals.globalSlider = false;
+        }
+
+        res.locals.globalAllProductsgit = allProducts;
+
+        console.log(allProducts)
+
+        if (!req.session.cart) {
+            req.session.cart = {};
+        }
+
+        let sessionCart = req.session.cart;
+        let prodIds = Object.keys(sessionCart);
+
+        if (prodIds.length > 0) {
+            console.log(sessionCart)
+            console.log(prodIds)
+            Product.find({_id: {$in: prodIds}}, (err, productResult) => {
+                console.log(err)
+                if (err) throw err;
 
 
-            for(let i =0; i < productResult.length; i ++){
-                let curProduct = productResult[i];
+                for (let i = 0; i < productResult.length; i++) {
+                    let curProduct = productResult[i];
 
-                curProduct['curQuantity'] = sessionCart[curProduct._id];
-                productResult[i] = curProduct;
-            }
+                    curProduct['curQuantity'] = sessionCart[curProduct._id];
+                    productResult[i] = curProduct;
+                }
 
-            res.locals.cartProducts = productResult;
+                res.locals.cartProducts = productResult;
+                next();
+            });
+        } else {
+            res.locals.cartProducts = [];
+            console.log(req.user);
+            console.log(req.session.cart);
             next();
-        });
-    }else {
-        res.locals.cartProducts = [];
-        console.log(req.user);
-        console.log(req.session.cart);
-        next();
-    }
-
+        }
+    });
 });
 
 //Models
@@ -135,29 +148,35 @@ app.use('/api/login', loginApi);
 app.use('/api/shop', shopApi);
 
 app.get('/', (req, res) => {
-    // fillCakeData()
+    // fillCakeData();
 
-    Product.findOneAndUpdate({name: '바램 두텁 떡'}, {$set:{detailedDescription:'왕의 탄신일에 빠짐없이 올랐던 떡 \\n 흑미, 쑥 , 호박 의 세가지 맛으로 구성되어 있고 견과류가 들어간 소는 고소한 맛이 고급스러움을 더합니다.\\n궁중의 떡으로 맛과 향이 좋고, 만드는 수고와 정성을 들여야 하는 만큼 맛도 훌륭합니다'}}, {new:true}, (err, productResult) => {
-        if(err) throw err;
+    Product.find({}, (err, result) => {
+        if (err) throw err;
 
-        console.log(productResult)
-        Product.find({},  (err, result) => {
-            if(err) throw err;
-
-            for(let i = 0; i < result.length; i ++){
-                console.log(result[i].detailedDescription);
-            }
-            res.render('./index', {
-                slideRevolution: true,
-                allProducts: result,
-                newProducts: result,
-                bestSellers: result,
-                recommendedProducts: result,
-                js: ['/index.js'],
-                css: ['/index.css'],
-            })
+        for (let i = 0; i < result.length; i++) {
+            console.log(result[i].detailedDescription);
+        }
+        res.render('./index', {
+            slideRevolution: true,
+            allProducts: result,
+            newProducts: result,
+            bestSellers: result,
+            recommendedProducts: result,
+            js: ['/index.js'],
+            css: ['/index.css'],
         })
     });
+});
+
+app.get('/admin', (req, res) => {
+    Product.find({}, (err, result) => {
+        if (err) throw err;
+
+        res.render('./admin', {
+            products: result,
+            js: ['./admin.js']
+        })
+    })
 });
 
 app.listen(port, () => {
@@ -165,7 +184,7 @@ app.listen(port, () => {
 });
 
 hbs.registerHelper('trueTillIndex', (targetIndex, inputIndex) => {
-    return parseInt(inputIndex) > parseInt(targetIndex) ? false:true
+    return parseInt(inputIndex) > parseInt(targetIndex) ? false : true
 });
 
 hbs.registerHelper('calculateTotal', (price, quantity) => {
@@ -174,4 +193,8 @@ hbs.registerHelper('calculateTotal', (price, quantity) => {
 
 hbs.registerHelper('evenOrNot', (index) => {
     return index % 2 === 0;
+});
+
+hbs.registerHelper('newLineToHtml', (text) => {
+    return text.replace(/\\n/g, '<br/>')
 });
