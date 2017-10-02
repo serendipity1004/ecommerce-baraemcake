@@ -97,7 +97,7 @@ app.use((req, res, next) => {
             res.locals.globalSlider = false;
         }
 
-        res.locals.globalAllProductsgit = allProducts;
+        res.locals.globalAllProducts = allProducts;
 
         console.log(allProducts)
 
