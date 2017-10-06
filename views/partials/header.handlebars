@@ -39,9 +39,16 @@
                     <li><a href="/login/profile">
                         <div><i class="icon-user"></i>내계정</div>
                     </a></li>
-                    <li><a href="/login">
-                        <div><i class="icon-th"></i>로그인</div>
-                    </a></li>
+                    {{#if login}}
+                        <li><a href="/login/logout">
+                            <div><i class="icon-th"></i>로그아웃</div>
+                        </a></li>
+                    {{else}}
+                        <li><a href="/login">
+                            <div><i class="icon-th"></i>로그인</div>
+                        </a></li>
+                    {{/if}}
+
                     <li><a href="/shop/cart">
                         <div><i class="icon-gift"></i>장바구니</div>
                     </a></li>
@@ -71,7 +78,7 @@
                                 <div class="container clearfix">
                                     <div class="slider-caption slider-caption-center">
                                         <h2 data-caption-animate="fadeInUp">{{name}}</h2>
-                                        <p data-caption-animate="fadeInUp" data-caption-delay="200">{{{newLineToHtml
+                                        <p data-caption-animate="fadeInUp" data-caption-delay="200">{{{onlyShowOneLine
                                                 overviewComments}}}</p>
                                         <a href="/shop/details/?id={{_id}}"
                                            class="button button-desc button-border button-rounded center button-red">지금

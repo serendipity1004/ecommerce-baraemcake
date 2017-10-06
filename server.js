@@ -93,7 +93,7 @@ app.use((req, res, next) => {
 
         res.locals.globalSlider = true;
 
-        if(req.url.startsWith('/shop/details') || req.url.startsWith('/shop/cart') || req.url.startsWith('/profile') || req.url.startsWith('/login') || req.url.startsWith('/admin')){
+        if(req.url.startsWith('/shop/details') || req.url.startsWith('/shop/cart') || req.url.startsWith('/profile') || req.url.startsWith('/login') || req.url.startsWith('/admin') || req.url.endsWith('/shop/') || req.url.endsWith('/shop')){
             res.locals.globalSlider = false;
         }
 
@@ -124,11 +124,12 @@ app.use((req, res, next) => {
                 }
 
                 res.locals.cartProducts = productResult;
+                console.log(req.user);
+
                 next();
             });
         } else {
             res.locals.cartProducts = [];
-            console.log(req.user);
             console.log(req.session.cart);
             next();
         }
@@ -196,5 +197,26 @@ hbs.registerHelper('evenOrNot', (index) => {
 });
 
 hbs.registerHelper('newLineToHtml', (text) => {
+
     return text.replace(/\\n/g, '<br/>')
+});
+
+hbs.registerHelper('onlyShowTwoLines', (text) =>{
+    let newArr = text.split(/\\n/g);
+
+    if(newArr.length > 2){
+        newArr.splice(2, newArr.length - 2)
+    }
+
+    return newArr.join('<br/>')
+});
+
+hbs.registerHelper('onlyShowOneLine', (text) => {
+    let newArr = text.split(/\\n/g);
+
+    if(newArr.length > 1){
+        newArr.splice(1, newArr.length - 1)
+    }
+
+    return newArr.join('<br/>')
 });

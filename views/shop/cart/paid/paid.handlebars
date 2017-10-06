@@ -1,0 +1,138 @@
+<section id="page-title">
+
+    <div class="container clearfix">
+        <h1>결제 내용</h1>
+    </div>
+
+</section><!-- #page-title end -->
+<section id="content">
+    <div class="content-wrap">
+
+        <div class="container clearfix">
+
+            <div class="table-responsive">
+
+                <table class="table cart">
+                    <thead>
+                    <tr>
+                        <th class="cart-product-remove">&nbsp;</th>
+                        <th class="cart-product-thumbnail">&nbsp;</th>
+                        <th class="cart-product-name">상품 이름</th>
+                        <th class="cart-product-price">개당 가격</th>
+                        <th class="cart-product-quantity">수량</th>
+                        <th class="cart-product-subtotal">가격</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each cartProducts}}
+                        <tr class="cart_item">
+                            <td class="cart-product-remove">
+                                <a href="" class="remove" title="Remove this item"><i
+                                        class="icon-trash2"></i></a>
+                            </td>
+
+                            <td class="cart-product-thumbnail">
+                                <a href="#"><img width="64" height="64" src="{{largeImagePath}}"
+                                                 alt="Pink Printed Dress"></a>
+                            </td>
+
+                            <td class="cart-product-name">
+                                <a href="#">{{name}}</a>
+                            </td>
+
+                            <td class="cart-product-price">
+                                <span class="amount">{{price}}</span>
+                            </td>
+
+                            <td class="cart-product-quantity">
+                                <div class="quantity clearfix">
+                                    <!--<input type="button" value="-" class="minus quantity-btn">-->
+                                    <input type="text" step="1" min="1" name="quantity"
+                                           value="{{quantity}}" title="Qty" class="qty" size="4" readonly/>
+                                    <!--<input type="button" value="+" class="plus quantity-btn">-->
+                                </div>
+                            </td>
+
+                            <td class="cart-product-subtotal">
+                                <input type="hidden" class="product-id" value="{{_id}}">
+                                <span class="amount total-price-each-item">{{calculateTotal price quantity}}</span>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+
+                </table>
+
+                {{#with paymentInfo}}
+                    <div class="col-md-6">
+                        <div class="fancy-title title-bottom-border">
+                            <h2><span>배송</span>지</h2>
+                        </div>
+
+                        <div class="col_full">
+                            <label for="name-sender">보내는 사람</label>
+                            <input type="text" id="name-sender" class="sm-form-control" value="{{user}}" readonly>
+                        </div>
+                        <div class="col_full">
+                            <label for="name-receiver">받는 사람</label>
+                            <input type="text" id="name-receiver" class="sm-form-control" value="{{receiverName}}" readonly>
+                        </div>
+                        <div class="col_full">
+                            <label for="search-address">주소</label>
+                            <input type="text" id="search-address" class="sm-form-control" value="{{searchAddress}}" readonly>
+                            <input type="text" id="additionalAddress" class="sm-form-control" value="{{additionalAddress}}" readonly>
+                        </div>
+                        <div class="col_half">
+                            <label for="email">이메일</label>
+                            <input type="text" id="email" class="sm-form-control" value="{{email}}" readonly>
+                        </div>
+                        <div class="col_half col_last">
+                            <label for="phone-number">전화번호</label>
+                            <input type="text" id="phone-number" class="sm-form-control" value="{{phoneNumber}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <div class="fancy-title title-bottom-border">
+                                <h2>총 <span>결제</span> 내용</h2>
+                            </div>
+                            <table class="table cart">
+                                <tbody>
+                                <tr>
+                                    <td class="notopborder cart-product-name">
+                                        <strong>사용 포인트</strong>
+                                    </td>
+
+                                    <td class="notopborder cart-product-name">
+                                        <span class="points-to-use">{{usedPoints}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">
+                                        <strong>배송비</strong>
+                                    </td>
+
+                                    <td class="cart-product-name">
+                                        <span class="amount delivery-fee">{{deliveryFee}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">
+                                        <strong>총 결제액</strong>
+                                    </td>
+
+                                    <td class="cart-product-name">
+                                        <span class="color lead"><strong class="final-pay-amount">{{paymentAmount}}</strong></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                {{/with}}
+
+            </div>
+        </div>
+    </div>
+</section>

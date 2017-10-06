@@ -18,7 +18,8 @@
                     <form id="login-form" name="login-form" class="nobottommargin" action="/login" method="post">
                         <div class="col_full">
                             <label for="username">이메일:</label>
-                            <input type="email" id="login-form-username" name="username" value="" class="sm-form-control"
+                            <input type="email" id="login-form-username" name="username" value=""
+                                   class="sm-form-control"
                                    placeholder="이메일을 입력해주세요"
                                    required/>
                         </div>
@@ -27,6 +28,11 @@
                             <label for="password">비밀번호:</label>
                             <input type="password" id="login-form-password" name="password" value=""
                                    class="sm-form-control" placeholder="비밀번호를 입력해주세요" required/>
+                            {{#if error}}
+                                <div class="alert alert-danger" role="alert" style="margin-top: 20px; text-align: center">
+                                    로그인 정보가 잘못되었습니다
+                                </div>
+                            {{/if}}
                         </div>
 
                         <div class="col_full nobottommargin">
@@ -41,7 +47,8 @@
                 <div class="acctitle"><i class="acc-closed icon-user4"></i><i class="acc-open icon-ok-sign"></i>회원가입
                 </div>
                 <div class="acc_content clearfix">
-                    <form id="register-form" name="register-form" class="nobottommargin" method="post" action="/login/new">
+                    <form id="register-form" name="register-form" class="nobottommargin" method="post"
+                          action="/login/new">
                         <div class="col_full">
                             <label for="register-form-last-name">성:</label>
                             <input type="text" id="register-form-last-name" name="register-form-last-name" value=""
@@ -58,7 +65,8 @@
                             <input type="email" id="register-form-email" name="register-form-email" value=""
                                    class="sm-form-control" placeholder="정확한 이메일을 입력해 주세요 예) example@gmail.com"/>
                             <input class="button button-border button-small button-border-thin button-blue"
-                                   style="text-align: center; margin: 5px 0 0 0 !important;" value="이메일 중복 확인" onclick="checkDuplicateEmail()" readonly />
+                                   style="text-align: center; margin: 5px 0 0 0 !important;" value="이메일 중복 확인"
+                                   onclick="checkDuplicateEmail()" readonly/>
                         </div>
 
                         <div class="col_full">
@@ -102,7 +110,8 @@
                         </div>
 
                         <div class="col_full nobottommargin">
-                            <button type="submit" class="button button-3d button-black nomargin" id="register-form-submit"
+                            <button type="submit" class="button button-3d button-black nomargin"
+                                    id="register-form-submit"
                                     name="register-form-submit" value="register">회원가입 하기
                             </button>
                         </div>

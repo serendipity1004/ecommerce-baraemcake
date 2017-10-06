@@ -11,11 +11,12 @@ let productSchema = new Schema(
         detailsImagePath: [String],
         stock: {type: Number, required: true},
         main: {type: Boolean},
+        points: {type:Number, default: 10},
         overviewComments: {type: String, required: true},
         detailedDescription: {type: String, required: true},
         additionalInfo: {
             quantity: Number,
-            source: String
+            weight: Number,
         }
     });
 

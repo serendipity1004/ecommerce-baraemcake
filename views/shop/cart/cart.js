@@ -1,22 +1,79 @@
 jQuery(document).ready(function ($) {
+    updateTotal();
+
     $("#processTabs").tabs({show: {effect: "fade", duration: 400}});
     $(".tab-linker").click(function () {
         $("#processTabs").tabs("option", "active", $(this).attr('rel') - 1);
         return false;
     });
     $('.cart-product-quantity').on('click', '.quantity-btn', function () {
-        let quantity = $(this).siblings('#quantity');
+        let quantity = $(this).siblings('.qty');
+        let parentThis = this;
         if ($(this).hasClass('minus') && quantity.val() > 1) {
-            quantity.val(parseInt(quantity.val()) - 1)
+            $.post('/api/shop/cart/add', {
+                itemId:$(this).parent().parent().parent().find('.product-id').val(),
+                itemQuantity:-1,
+            }, function (returnData) {
+                quantity.val(parseInt(quantity.val()) - 1)
+                let productPrice = $(parentThis).parents('.cart-product-quantity').siblings('.cart-product-price').find('.amount');
+                let subtotal = $(parentThis).parents('.cart-product-quantity').siblings('.cart-product-subtotal').find('.amount');
+
+                subtotal.text(parseInt(quantity.val()) * parseInt(productPrice.text()))
+
+                updateTotal()
+            });
         } else if ($(this).hasClass('plus')) {
-            quantity.val(parseInt(quantity.val()) + 1)
+            $.post('/api/shop/cart/add', {
+                itemId:$(this).parent().parent().parent().find('.product-id').val(),
+                itemQuantity:1,
+            }, function (returnData) {
+                quantity.val(parseInt(quantity.val()) + 1)
+                let productPrice = $(parentThis).parents('.cart-product-quantity').siblings('.cart-product-price').find('.amount');
+                let subtotal = $(parentThis).parents('.cart-product-quantity').siblings('.cart-product-subtotal').find('.amount');
+
+                console.log(subtotal)
+                subtotal.text(parseInt(quantity.val()) * parseInt(productPrice.text()))
+
+                updateTotal()
+            });
+        }
+    });
+
+    $('#use-point-btn').click(function (e) {
+        e.preventDefault();
+
+        let inputPoints = parseInt($('#input-points-to-use').val());
+        let ownedPoints = parseInt($('#owned-points').text());
+
+        if(inputPoints > ownedPoints){
+            alert('보유하신 포인트보다 많은 포인트를 입력하셨습니다.')
+        }else {
+            $('.points-to-use').text($('#input-points-to-use').val())
         }
 
-        let productPrice = $(this).parents('.cart-product-quantity').siblings('.cart-product-price').find('.amount');
-        let subtotal = $(this).parents('.cart-product-quantity').siblings('.cart-product-subtotal').find('.amount');
-
-        subtotal.text(parseInt(quantity.val()) * parseInt(productPrice.text()))
+        updateTotal()
     });
+
+    function updateTotal() {
+        let total = 0;
+        $('.cart_item').each(function (index, item) {
+            let price = $(item).find('.total-price-each-item').text();
+            // console.log(price)
+
+            total += parseInt(price);
+        });
+
+        if(parseInt(total) > 35000){
+            $('.delivery-fee').text(0)
+
+        }else {
+            $('.delivery-fee').text(3000)
+        }
+
+        total += parseInt($('.delivery-fee').text());
+
+        $('.final-pay-amount').text(total - parseInt($('.points-to-use').text()))
+    }
 
     $('.cart-product-remove').on('click', '.remove', function (e) {
         e.preventDefault();
@@ -33,7 +90,7 @@ jQuery(document).ready(function ($) {
         $.post('/api/shop/cart/remove_product', {productId}, function (sessionCart) {
             console.log('done')
             console.log(sessionCart)
-
+            updateTotal()
         });
     });
 });
@@ -96,37 +153,141 @@ function sample3_execDaumPostcode() {
 }
 
 var IMP = window.IMP; // 생략가능
-IMP.init('imp95847967'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+IMP.init('imp46274458'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
-$('#pay-test-btn').click(function (e) {
+$('.payment-anchor-kakao').click(function (e) {
     e.preventDefault();
 
-    IMP.request_pay({
-        pg : 'danal', // version 1.1.0부터 지원.
-        pay_method : 'card',
-        merchant_uid : 'merchant_' + new Date().getTime(),
-        name : '주문명:결제테스트',
-        amount : 14000,
-        buyer_email : 'iamport@siot.do',
-        buyer_name : '구매자이름',
-        buyer_tel : '010-1234-5678',
-        buyer_addr : '서울특별시 강남구 삼성동',
-        buyer_postcode : '123-456',
-        m_redirect_url : 'https://www.yourdomain.com/payments/complete'
-    }, function(rsp) {
-        if ( rsp.success ) {
-            var msg = '결제가 완료되었습니다.';
-            msg += '고유ID : ' + rsp.imp_uid;
-            msg += '상점 거래ID : ' + rsp.merchant_uid;
-            msg += '결제 금액 : ' + rsp.paid_amount;
-            msg += '카드 승인번호 : ' + rsp.apply_num;
-        } else {
-            var msg = '결제에 실패하였습니다.';
-            msg += '에러내용 : ' + rsp.error_msg;
-        }
-        alert(msg);
+    let pointsUsed = parseInt($('.points-to-use').text());
+    let receiverName = $('#last-name-receiver').val().trim() + $('#first-name-sender').val().trim();
+    let searchAddress = $('#register-form-address').val();
+    let additionalAddress = $('#register-form-additional-address').val();
+    let postCode = $('#register-form-post-code').val();
+    let email = $('#email').val();
+    let phoneNumber = $('#phone-number').val();
+    let deliveryFee = $('.delivery-fee').text();
+
+    $.post('/api/shop/cart/req_payment_info', {pointsUsed,
+        receiverName,
+        searchAddress,
+        additionalAddress,
+        email,
+        phoneNumber,
+        deliveryFee,
+        postCode
+    }, function (paymentInfo) {
+        IMP.request_pay({
+            pg : 'kakao', // version 1.1.0부터 지원.
+            pay_method : 'card',
+            merchant_uid : new Date().getTime(),
+            name : '주문',
+            amount:1000,
+            // amount : parseInt(paymentInfo.totalPrice),
+            buyer_email : paymentInfo.buyer_email,
+            buyer_name : paymentInfo.buyer_name,
+            buyer_tel : paymentInfo.buyer_tel,
+            buyer_addr : paymentInfo.buyer_addr,
+            buyer_postcode : paymentInfo.buyer_postcode,
+            // m_redirect_url : `localhost:3000/shop/cart/paid`,
+        }, function(rsp) {
+            if ( rsp.success ) {
+                console.log('rsp')
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+
+                $.post('/api/shop/cart/payment_success', {
+                    merchantId:rsp.merchant_uid,
+                    paidAmount:rsp.paid_amount,
+                    impId:rsp.imp_uid,
+                    paymentId:rsp.apply_num,
+                    pointsUsed: pointsUsed,
+                    receiverName:receiverName,
+                    searchAddress:searchAddress,
+                    additionalAddress:additionalAddress,
+                    email:email,
+                    phoneNumber:phoneNumber,
+                    deliveryFee:deliveryFee,
+                    postCode:postCode
+                }, function (returnResult) {
+                    console.log('last return');
+                    location.href = `/shop/cart/paid/?id=${returnResult.paymentInfoId}`
+                })
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+                alert(msg);
+
+            }
+        });
     });
-})
+});
+
+$('.payment-anchor-naver').click(function (e) {
+    e.preventDefault();
+
+    $.post('/api/shop/cart/req_payment_info', {}, function (paymentInfo) {
+        IMP.request_pay({
+            pg : 'naverco', // version 1.1.0부터 지원.
+            pay_method : 'card',
+            merchant_uid : 'merchant_' + paymentInfo.merchant_uid,
+            name : '주문',
+            amount : parseInt(paymentInfo.totalPrice),
+            buyer_email : paymentInfo.buyer_email,
+            buyer_name : paymentInfo.buyer_name,
+            buyer_tel : paymentInfo.buyer_tel,
+            buyer_addr : paymentInfo.buyer_addr,
+            buyer_postcode : paymentInfo.buyer_postcode,
+            m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+        }, function(rsp) {
+            if ( rsp.success ) {
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+            }
+            alert(msg);
+        });
+    });
+});
+
+$('.payment-anchor-card').click(function (e) {
+    e.preventDefault();
+
+    $.post('/api/shop/cart/req_payment_info', {}, function (paymentInfo) {
+        IMP.request_pay({
+            pg : 'danal', // version 1.1.0부터 지원.
+            pay_method : 'card',
+            merchant_uid : 'merchant_' + paymentInfo.merchant_uid,
+            name : '주문',
+            amount : parseInt(paymentInfo.totalPrice),
+            buyer_email : paymentInfo.buyer_email,
+            buyer_name : paymentInfo.buyer_name,
+            buyer_tel : paymentInfo.buyer_tel,
+            buyer_addr : paymentInfo.buyer_addr,
+            buyer_postcode : paymentInfo.buyer_postcode,
+            m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+        }, function(rsp) {
+            if ( rsp.success ) {
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+            }
+            alert(msg);
+        });
+    });
+});
 
 jQuery('#billing-form').validate({
     rules: {

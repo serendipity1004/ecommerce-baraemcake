@@ -8,10 +8,11 @@ const User = require('../models/user');
 
 const saltRounds = 10;
 
-router.get('/', (req, res) => {
+router.get('/',(req, res) => {
+
     let errMessage = req.flash('error');
 
-    console.log(errMessage)
+    console.log(errMessage);
 
     res.render('./login/login', {
         error: errMessage,
@@ -27,7 +28,7 @@ router.post('/', passport.authenticate('local', {
     failureFlash: '로그인 정보가 잘못되었습니다'
 }));
 
-router.post('/logout', (req, res)=>{
+router.get('/logout', (req, res)=>{
     req.logout();
     res.redirect('/')
 });

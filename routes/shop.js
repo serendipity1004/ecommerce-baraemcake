@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Product = require('../models/product');
+const User = require('../models/user');
+const PaymentInfo = require('../models/paymentInfo');
 
 router.get('/', (req, res) => {
 
@@ -40,7 +42,15 @@ router.get('/details', (req, res) => {
     });
 });
 
-router.get('/cart', (req, res) => {
+router.get('/cart', (req, res, next) => {
+    if(req.isAuthenticated()){
+        console.log('authenticated');
+        next();
+    }else{
+        console.log('not authenticated');
+        res.redirect('/login');
+    }
+}, (req, res) => {
     let cart = req.session.cart;
 
     let cartKeys = Object.keys(cart);
@@ -53,25 +63,54 @@ router.get('/cart', (req, res) => {
 
             curProduct['quantity'] = cart[curProduct._id];
         }
-        res.render('./shop/cart/cart' , {
-            cartProducts:productResults,
-            postCode:true,
-            payModule:true,
-            js:['/shop/cart/cart.js'],
-            css:['/shop/cart/cart.css']
+
+        User.findById(req.user, (err, userResult) => {
+            if(err) throw err;
+
+            console.log(productResults)
+
+            res.render('./shop/cart/cart' , {
+                cartProducts:productResults,
+                user:userResult,
+                postCode:true,
+                payModule:true,
+                js:['/shop/cart/cart.js'],
+                css:['/shop/cart/cart.css']
+            })
+        });
+    })
+});
+
+router.get('/cart/paid', (req, res) => {
+    let id = req.query.id;
+
+    PaymentInfo.findById(id, (err, paymentInfoResult) => {
+        if(err) throw err;
+
+        let products = paymentInfoResult.products;
+        let productQuant = {};
+        let productIds = [];
+
+        for(let i =0; i < products.length; i ++){
+            productIds.push(products[i].id);
+            productQuant[products[i].id] = products[i].quantity;
+        }
+
+        Product.find({_id:{$in:productIds}}, (err, productResult) => {
+            if(err) throw err;
+
+            for(let i =0; i < productResult.length; i++){
+                productResult[i]['quantity'] = productQuant[productResult[i]._id]
+            }
+
+            res.render('./shop/cart/paid/paid', {
+                js:['/shop/cart/paid/paid.js'],
+                css:['/shop/cart/paid/paid.css'],
+                cartProducts:productResult,
+                paymentInfo:paymentInfoResult
+            })
         })
     })
-
-    // Product.find({_id: {$in:cartKeys}}, (err, result) => {
-    //     if(err)throw err;
-    //
-    //     let productResults = result.toObject();
-    //
-    //     for(let index in productResults){
-    //         let curProduct = productResults[index];
-    //
-    //         curProduct['quantity'] = cart[curProduct._id];
-    //     }
 });
 
 module.exports = router;

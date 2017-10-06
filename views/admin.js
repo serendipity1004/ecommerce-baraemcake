@@ -6,6 +6,10 @@ jQuery(document).ready(function ($) {
         let overviewComments = $(this).parent().find('.overview-comments').val();
         let detailedDescription = $(this).parent().find('.detailed-description').val();
         let id = $(this).siblings('.product-id').val();
+        let quantity = $(this).parent().find('.quantity').val();
+        let weight = $(this).parent().find('.weight').val();
+
+        let additionalInfo = {quantity, weight};
 
         console.log(name);
 
@@ -14,10 +18,11 @@ jQuery(document).ready(function ($) {
                 id: id,
                 productDetails:
                     {
-                        name, overviewComments, detailedDescription
+                        name, overviewComments, detailedDescription, additionalInfo
                     }
             };
 
+        console.log(productDetails)
 
         $.post('/api/shop/details/update', productDetails, function (data) {
             console.log(data)
