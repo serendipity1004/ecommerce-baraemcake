@@ -66,7 +66,9 @@
                                     <input type="hidden" value="{{_id}}" id="product-id">
                                 </div>
                                 <!--<div class="ld-over">-->
-                                <button id="update-cart-btn" class="add-to-cart button nomargin ld-over">장바구니에 추가하기<div class="ld ld-ring ld-spin"></div> </button>
+                                <button id="update-cart-btn" class="add-to-cart button nomargin ld-over">장바구니에 추가하기
+                                    <div class="ld ld-ring ld-spin"></div>
+                                </button>
                                 <!--</div>-->
                             </form><!-- Product Single - Quantity & Cart Button End -->
 
@@ -205,37 +207,44 @@
             <div class="full-width full-screen dark"
                  style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('{{detailsImagePath.[1]}}') no-repeat center; background-size: cover ">
 
-                <div class="container clearfix" style="display: flex; justify-content: center; flex-direction: column; height: inherit;">
+                <div class="container clearfix"
+                     style="display: flex; justify-content: center; flex-direction: column; height: inherit;">
                     <div style="display: flex; justify-content: center;">
-                        <div class="col_half">
+                        <div class="row">
 
-                            <div class="title-block" style="margin-bottom: 90px;">
-                                <h1>떡 <span>배송</span>정보</h1>
-                                <span style="color: white !important;">평일 오전 4시 이전 주문 완료 시 당일 발송, 익일 도착</span>
+                            <div class="col-md-6">
+
+                                <div class="title-block" style="margin-bottom: 90px;">
+                                    <h1>떡 <span>배송</span>정보</h1>
+                                    <span style="color: white !important;">평일 오전 4시 이전 주문 완료 시 당일 발송, 익일 도착</span>
+                                </div>
+                                <div style="font-size: 1.6em;">
+                                    <p>택배는 도착시간 지정이 불가능하며 토, 일요일에는 발송하지 않으니 월요일 도착도 불가능합니다.</p>
+                                    <p>배송일 많을 경우 2~3일 걸릴 수도 있으나 냉동상태에서 아이스 보냉처리하여 보내 드리기 때문에 2~3일 소요되어도 신선도에는 전혀 문제가 없으니
+                                        양해 바랍니다</p>
+                                    <p>하절기( 8월 ~ 9월 )에는 도서산간 지방 및 제주도 지역은 발송하지 않습니다 (10월 부터 배송재개)</p>
+                                </div>
                             </div>
-                            <div style="font-size: 1.6em;">
-                                <p>택배는 도착시간 지정이 불가능하며 토, 일요일에는 발송하지 않으니 월요일 도착도 불가능합니다.</p>
-                                <p>배송일 많을 경우 2~3일 걸릴 수도 있으나 냉동상태에서 아이스 보냉처리하여 보내 드리기 때문에 2~3일 소요되어도 신선도에는 전혀 문제가 없으니 양해 바랍니다</p>
-                                <p>하절기( 8월 ~ 9월 )에는  도서산간 지방 및 제주도 지역은 발송하지 않습니다 (10월 부터 배송재개)</p>
+                            <div class="col-md-6">
+                                <div class="title-block" style="margin-bottom: 90px;">
+                                    <h1>떡 <span>포장</span>안내</h1>
+                                    <span style="color: white !important;">모든 떡은 아이스팩과 함께 포장되어 발송됩니</span>
+                                </div>
+                                <div style="font-size: 1.6em;">
+                                    <p>이미 냉동 한 떡이므로 해동 후 재 냉동 마시길 바랍니다</p>
+                                    <p>본 제품은 소비자 분쟁 해결 기준에 의거 교환하거나 환불 받을 수 있습니다</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="col_half col_last">
-                            <div class="title-block" style="margin-bottom: 90px;">
-                                <h1>떡 <span>포장</span>안내</h1>
-                                <span style="color: white !important;">모든 떡은 아이스팩과 함께 포장되어 발송됩니</span>
-                            </div>
-                            <div style="font-size: 1.6em;">
-                                <p>이미 냉동 한 떡이므로 해동 후 재 냉동 마시길 바랍니다</p>
-                                <p>본 제품은 소비자 분쟁 해결 기준에 의거 교환하거나 환불 받을 수 있습니다</p>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
             <div class="full-width full-screen dark"
                  style="background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('{{detailsImagePath.[2]}}') no-repeat center; background-size: cover ">
 
-                <div class="container clearfix" style="display: flex; justify-content: center; flex-direction: column; height: inherit;">
+                <div class="container clearfix"
+                     style="display: flex; justify-content: center; flex-direction: column; height: inherit;">
                     <div style="display: flex; justify-content: center;">
                         <div class="col_full">
                             <div class="title-block" style="margin-bottom: 90px;">
@@ -244,7 +253,8 @@
                             </div>
                             <div style="font-size: 1.6em;">
                                 <p>찹쌀이 들어간 제품은 상온에서 20~30분 자연 해동해서 드시면 더욱 맛있습니다</p>
-                                <p>멥쌀이 들어간 제품 (설기류, 송편, 망개떡등) 제품은 전자레인지 5~10분 , 찜기는 등을 20~30분 정도 데운 후 김을 식힌 후 드시면 더욱 맛있습니다. </p>
+                                <p>멥쌀이 들어간 제품 (설기류, 송편, 망개떡등) 제품은 전자레인지 5~10분 , 찜기는 등을 20~30분 정도 데운 후 김을 식힌 후 드시면 더욱
+                                    맛있습니다. </p>
                                 <p>택배를 받은 후 바로 드시지 않을 경우에는 냉동 보관해 주십시요</p>
                             </div>
                         </div>
