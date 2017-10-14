@@ -19,10 +19,12 @@ const {fillCakeData} = require('./tools/fillCakeData');
 //Routes
 const shopRoute = require('./routes/shop');
 const loginRoute = require('./routes/login');
+const adminRoute = require('./routes/admin');
 
 //Api Routes
 const loginApi = require('./routes/api/login');
 const shopApi = require('./routes/api/shop');
+const adminApi = require('./routes/api/admin');
 
 let handlebars = exphbs.create({
     layoutsDir: path.join(__dirname, "views/layouts"),
@@ -99,8 +101,6 @@ app.use((req, res, next) => {
 
         res.locals.globalAllProducts = allProducts;
 
-        console.log(allProducts)
-
         if (!req.session.cart) {
             req.session.cart = {};
         }
@@ -109,8 +109,6 @@ app.use((req, res, next) => {
         let prodIds = Object.keys(sessionCart);
 
         if (prodIds.length > 0) {
-            console.log(sessionCart)
-            console.log(prodIds)
             Product.find({_id: {$in: prodIds}}, (err, productResult) => {
                 console.log(err)
                 if (err) throw err;
@@ -124,7 +122,6 @@ app.use((req, res, next) => {
                 }
 
                 res.locals.cartProducts = productResult;
-                console.log(req.user);
 
                 next();
             });
@@ -143,10 +140,12 @@ const Product = require('./models/product');
 //Define Routes
 app.use('/shop', shopRoute);
 app.use('/login', loginRoute);
+app.use('/admin', adminRoute);
 
 //Define APIs
 app.use('/api/login', loginApi);
 app.use('/api/shop', shopApi);
+app.use('/api/admin', adminApi);
 
 app.get('/', (req, res) => {
     // fillCakeData();
@@ -154,9 +153,6 @@ app.get('/', (req, res) => {
     Product.find({}, (err, result) => {
         if (err) throw err;
 
-        for (let i = 0; i < result.length; i++) {
-            console.log(result[i].detailedDescription);
-        }
         res.render('./index', {
             slideRevolution: true,
             allProducts: result,
@@ -169,16 +165,16 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/admin', (req, res) => {
-    Product.find({}, (err, result) => {
-        if (err) throw err;
-
-        res.render('./admin', {
-            products: result,
-            js: ['./admin.js']
-        })
-    })
-});
+// app.get('/admin', (req, res) => {
+//     Product.find({}, (err, result) => {
+//         if (err) throw err;
+//
+//         res.render('./admin', {
+//             products: result,
+//             js: ['./admin.js']
+//         })
+//     })
+// });
 
 app.listen(port, () => {
     console.log(`listening at ${port}`)

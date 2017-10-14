@@ -4,6 +4,10 @@ body{
     font-family: 'Jeju Gothic', Serif !important;
 }
 
+input{
+    font-family: Arial;
+}
+
 #header-nav-icon-list li div{
     color: #dadada;
 }

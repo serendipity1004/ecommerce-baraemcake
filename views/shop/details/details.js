@@ -16,11 +16,19 @@ jQuery(document).ready(function ($) {
         let prodId = $('#product-id').val();
         let prodQuantity = $('#quantity-number').val();
 
+        let clickedBtn = $(this);
+        clickedBtn.attr('disabled', true);
+        let target = $(clickedBtn);
+        $(target).addClass('running');
+
         $.post('/api/shop/cart/add', {
             itemId:prodId,
             itemQuantity:prodQuantity
         }, function (result) {
-            console.log(result)
+            setTimeout(function () {
+                clickedBtn.attr('disabled', false);
+                $(target).removeClass('running')
+            }, 1000)
         })
     });
 });

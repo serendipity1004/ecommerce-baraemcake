@@ -187,9 +187,9 @@ function checkDuplicateEmail() {
         email: emailToVerify
     }, function (result) {
         if(result.exists){
-            console.log('id exists')
+            alert('이미 존재하는 ID입니다')
         }else {
-            console.log('id does not exist')
+            alert('사용 가능한 ID입니다')
         }
     })
 }

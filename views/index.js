@@ -96,24 +96,29 @@ jQuery('#top-banner').click(function () {
     }, 500);
     return false;
 });
+if (/Mobi/.test(navigator.userAgent)) {
+    jQuery('#why-baraem-header').text('바램떡이여야만 하는 이유 <br/>맛있으니까');
+    jQuery('#top-typed').text('맛있으니까 바램떡이다');
+}else{
+    let typed = new Typed('#why-baraem-header', {
+        strings:['바램떡 이여야만 하는 이유', '맛있으니까 ^200'],
+        typeSpeed:100,
+        backSpeed:50,
+        loop:true,
+        showCursor:false,
+        backDelay:1500
+    });
 
-let typed = new Typed('#why-baraem-header', {
-    strings:['바램떡 이여야만 하는 이유', '맛있으니까 ^200'],
-    typeSpeed:100,
-    backSpeed:50,
-    loop:true,
-    showCursor:false,
-    backDelay:1500
-});
+    let topTyped = new Typed('#top-typed', {
+        strings:['맛있으니까 바램떡이다'],
+        typeSpeed:100,
+        backSpeed:50,
+        loop:true,
+        showCursor:false,
+        backDelay:1500
+    });
+}
 
-let topTyped = new Typed('#top-typed', {
-    strings:['맛있으니까 바램떡이다'],
-    typeSpeed:100,
-    backSpeed:50,
-    loop:true,
-    showCursor:false,
-    backDelay:1500
-});
 
 // jQuery(document).ready(function ($) {
 //     $('#why-baraem-header').textillate({in:{effect:'rollIn'}})

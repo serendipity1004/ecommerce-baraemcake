@@ -29,7 +29,8 @@
                             <input type="password" id="login-form-password" name="password" value=""
                                    class="sm-form-control" placeholder="비밀번호를 입력해주세요" required/>
                             {{#if error}}
-                                <div class="alert alert-danger" role="alert" style="margin-top: 20px; text-align: center">
+                                <div class="alert alert-danger" role="alert"
+                                     style="margin-top: 20px; text-align: center">
                                     로그인 정보가 잘못되었습니다
                                 </div>
                             {{/if}}
@@ -70,12 +71,22 @@
                         </div>
 
                         <div class="col_full">
-                            <label for="register-form-address">주소:</label>
-                            <input type="text" id="register-form-address" name="register-form-address" value=""
-                                   class="sm-form-control" placeholder="주소 찾기를 눌러주세요" readonly/>
+                            <div class="col_two_third">
+                                <label for="register-form-address">주소:</label>
+
+                                <input type="text" id="register-form-address" name="register-form-address" value=""
+                                       class="sm-form-control" placeholder="주소 찾기를 눌러주세요" readonly/>
+                            </div>
+                            <div class="col_one_third col_last">
+                                <label for="register-form-post-code">우편번호 :</label>
+                                <input id="register-form-post-code" name="register-form-post-code" value="" placeholder="주소찾기를 눌러주세요"
+                                       class="sm-form-control"/>
+                            </div>
+
                             <input type="text" id="register-form-additional-address"
                                    name="register-form-additional-address" value=""
                                    class="sm-form-control" style="margin-top: 5px" placeholder="추가 주소"/>
+
                             <input class="button button-border button-small button-border-thin button-blue"
                                    onclick="sample3_execDaumPostcode()"
                                    style="text-align: center; margin: 5px 0 0 0 !important;" value="주소 찾기" readonly>
@@ -86,8 +97,6 @@
                                      style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1"
                                      onclick="foldDaumPostcode()" alt="접기 버튼">
                             </div>
-                            <input type="hidden" id="register-form-post-code" name="register-form-post-code" value=""
-                                   class="sm-form-control" disabled/>
                         </div>
 
                         <div class="col_full">

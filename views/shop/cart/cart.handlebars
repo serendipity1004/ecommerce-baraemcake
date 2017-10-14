@@ -112,7 +112,7 @@
 
                                 <div class="col_full">
                                     <div class="fancy-title" style="text-align: center">
-                                        <h3>현재 <span id="owned-points">2000</span> 포인트 보유중 입니다</h3>
+                                        <h3>현재 <span id="owned-points">{{user.points}}</span> 포인트 보유중 입니다</h3>
                                     </div>
                                 </div>
                                 <div class="col_two_third">
@@ -208,10 +208,17 @@
                                            placeholder="이름을 입력해주세요" value="{{firstName}}">
                                 </div>
                                 <div class="col_full">
-                                    <label for="register-form-address">주소:</label>
-                                    <input type="text" id="register-form-address" name="register-form-address"
-                                           value="{{searchAddress}}"
-                                           class="sm-form-control" placeholder="주소 찾기를 눌러주세요" readonly/>
+                                    <div class="col_two_third">
+                                        <label for="register-form-address">주소:</label>
+
+                                        <input type="text" id="register-form-address" name="register-form-address" value="{{searchAddress}}"
+                                               class="sm-form-control" placeholder="주소 찾기를 눌러주세요" readonly/>
+                                    </div>
+                                    <div class="col_one_third col_last">
+                                        <label for="register-form-post-code">우편번호 :</label>
+                                        <input id="register-form-post-code" name="register-form-post-code" value="{{postCode}}" placeholder="주소찾기를 눌러주세요"
+                                               class="sm-form-control"/>
+                                    </div>
                                     <input type="text" id="register-form-additional-address"
                                            name="register-form-additional-address" value="{{additionalAddress}}"
                                            class="sm-form-control" style="margin-top: 5px" placeholder="추가 주소"/>
@@ -247,6 +254,10 @@
                         </div>
                     {{/with}}
                     <div id="ptab3">
+                        <div class="col_full">
+                            <h5>결제후 결제완료 페이지로 이동하기 전까지 절대로 페이지를 닫거나 새로고침 하지 마세요.</h5>
+                            <h5>결제후 결제완료 페이지가 보이지 않을시 본사로 연락 부탁드립니다. (결제취소 제외)</h5>
+                        </div>
                         <div class="col_one_fourth">
                             <div class="title-block">
                                 <h4>
@@ -279,6 +290,7 @@
                                     핸드폰 결제
                                 </h4>
                             </div>
+                            <a class="payment-anchor-phone button button-large button-border button-rounded tright" href="#" style="height: 51px; line-height: 51px; text-align: center">핸드폰 결제</a>
                         </div>
                         <div class="line"></div>
                         <a href="#" class="button button-3d nomargin tab-linker" rel="2">배송지 입력하기</a>

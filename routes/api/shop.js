@@ -89,6 +89,10 @@ router.post('/cart/req_payment_info', (req, res) => {
 
         totalPrice -= pointsUsed;
 
+        if(totalPrice < 35000){
+            totalPrice += 3000;
+        }
+
         // let merchant_uid = req.user;
         User.findById(req.user, (err, userResult) => {
             if(err) throw err;
@@ -151,6 +155,8 @@ router.post('/cart/payment_success', (req, res) => {
     let cartKeys = Object.keys(cart);
     let deliveryFee = parseInt(body.deliveryFee);
     let postCode = body.postCode;
+    let senderName = body.senderName;
+    let paymentMethod = body.paymentMethod;
 
     Product.find({_id:{$in:cartKeys}}, (err, productResult) => {
         if(err) throw err;
@@ -180,23 +186,12 @@ router.post('/cart/payment_success', (req, res) => {
 
         //MUST CHANGE -- test purpose
 
-        if(1000 === paidAmount){
-            points -= pointsUsed;
-            console.log(userId);
-            console.log(paidAmount);
-            console.log(products);
-            console.log(impId);
-            console.log(paymentId);
-            console.log(receiverName);
-            console.log(searchAddress);
-            console.log(additionalAddress);
-            console.log(email);
-            console.log(phoneNumber);
-            console.log(pointsUsed);
-            console.log(merchantId);
+        if(calculatedTotal === paidAmount){
 
             let paymentInfo = new PaymentInfo({
-                user:userId,
+                userId:userId,
+                paymentMethod:paymentMethod,
+                senderName:senderName,
                 paymentAmount:paidAmount,
                 products:products,
                 impId:impId,
@@ -209,12 +204,10 @@ router.post('/cart/payment_success', (req, res) => {
                 usedPoints:pointsUsed,
                 deliveryFee:deliveryFee,
                 postCode:postCode,
-                usedPoints:pointsUsed
                 // merchantId:merchantId
             });
 
             paymentInfo.save((err) => {
-                console.log(err)
                 if(err) throw err;
 
                 User.findOneAndUpdate({_id:req.user}, {$inc:{points:points}}, (err, userResult) => {
@@ -228,53 +221,68 @@ router.post('/cart/payment_success', (req, res) => {
         }else {
             res.json({success:false, detail:'결제 금액이 잘못되었습니다'})
         }
+    })
+});
 
+router.post('/cart/request_payment_info/naver', (req, res) => {
+    let ipAddress = '';
+    let cart = req.session.cart;
 
-        // Product.find({_id:{$in:cartKeys}}, (err, cartProductResult) => {
-        //     if(err) throw err;
-        //
-        //     for(let i = 0; i < cartProductResult.length; i++){
-        //         let curProduct = cartProductResult[i];
-        //
-        //         calculatedTotal += parseInt(curProduct.price) * parseInt(cart[curProduct._id]);
-        //     }
-        //
-        //     calculatedTotal += deliveryFee;
-        //     calculatedTotal -= pointsUsed;
-        //
-        //     if(calculatedTotal === paidAmount){
-        //         points -= pointsUsed;
-        //
-        //         let paymentInfo = new PaymentInfo({
-        //             user:userId,
-        //             paymentAmount:paidAmount,
-        //             products:products,
-        //             impId:impId,
-        //             paymentId:paymentId,
-        //             receiverName:receiverName,
-        //             searchAddress:searchAddress,
-        //             additionalAddress:additionalAddress,
-        //             email:email,
-        //             phoneNumber:phoneNumber,
-        //             usedPoints:pointsUsed,
-        //             merchantId:merchantId
-        //         });
-        //
-        //         paymentInfo.save((err) => {
-        //             if(err) throw err;
-        //
-        //             User.findOneAndUpdate({_id:req.user}, {$inc:{points:points}}, (err, userResult) => {
-        //                 if(err) throw err;
-        //
-        //                 console.log('all good');
-        //                 req.session.cart ={};
-        //                 res.json({success:true, paymentInfoId:paymentInfo._id})
-        //             })
-        //         })
-        //     }else {
-        //         res.json({success:false, detail:'결제 금액이 잘못되었습니다'})
-        //     }
-        // });
+    let cartKeys = Object.keys(cart);
+
+    let naverProducts = [];
+    let price = 0;
+
+    User.findById(req.user, (err, userResult) => {
+        if(err) throw err;
+
+        Product.find({_id:{$in:cartKeys}}, (err, result) => {
+            if(err) throw err;
+
+            for(let i =0; i < result.length; i ++){
+                let curProd = result[i];
+                let productTemplate =
+                    {
+                        id:curProd._id,
+                        name:curProd.name,
+                        basePrice:curProd.price,
+                        taxType:'FREE',
+                        quantity:cart[curProd._id],
+                        infoUrl:`${ipAddress}/shop/details/${curProd._id}`,
+                        imageUrl:`${ipAddress}/images/ricecakes/cropped/${curProd.name}/1.jpg`,
+                        shipping:{
+                            groupId:'1',
+                            method:'Delivery',
+                            baseFee:3000,
+                            feeType:'CONDITIONAL_FREE',
+                            feePayType:'PREPAYED'
+                        }
+                    };
+                naverProducts.push(productTemplate);
+                price += parseInt(curProd.price) * cart[curProd._id]
+            }
+
+            if(price < 35000){
+                price += 3000;
+            }
+
+            let template =
+                {
+                    pg: 'nverco',
+                    pay_method:'card',
+                    merchant_uid:'merchant_' + new Date().getTime(),
+                    name:'naver payment',
+                    amount:price,
+                    buyer_email:userResult.email,
+                    buyer_name:userResult.lastName.trim() + userResult.firstName.trim(),
+                    buyer_tel:userResult.phoneNumber,
+                    buyer_addr:userResult.searchedAddress.trim() + userResult.additionalAddress.trim(),
+                    buyer_postcode:userResult.postCode,
+                    naverProducts:naverProducts
+                }
+
+                res.json({template})
+        });
     })
 });
 

@@ -15,7 +15,6 @@
                 <table class="table cart">
                     <thead>
                     <tr>
-                        <th class="cart-product-remove">&nbsp;</th>
                         <th class="cart-product-thumbnail">&nbsp;</th>
                         <th class="cart-product-name">상품 이름</th>
                         <th class="cart-product-price">개당 가격</th>
@@ -26,10 +25,6 @@
                     <tbody>
                     {{#each cartProducts}}
                         <tr class="cart_item">
-                            <td class="cart-product-remove">
-                                <a href="" class="remove" title="Remove this item"><i
-                                        class="icon-trash2"></i></a>
-                            </td>
 
                             <td class="cart-product-thumbnail">
                                 <a href="#"><img width="64" height="64" src="{{largeImagePath}}"
@@ -66,12 +61,12 @@
                 {{#with paymentInfo}}
                     <div class="col-md-6">
                         <div class="fancy-title title-bottom-border">
-                            <h2><span>배송</span>지</h2>
+                            <h2><span>배송</span> 정보</h2>
                         </div>
 
                         <div class="col_full">
                             <label for="name-sender">보내는 사람</label>
-                            <input type="text" id="name-sender" class="sm-form-control" value="{{user}}" readonly>
+                            <input type="text" id="name-sender" class="sm-form-control" value="{{senderName}}" readonly>
                         </div>
                         <div class="col_full">
                             <label for="name-receiver">받는 사람</label>

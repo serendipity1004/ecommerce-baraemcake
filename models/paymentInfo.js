@@ -3,9 +3,11 @@ let Schema = mongoose.Schema;
 
 let paymentInfo = new Schema(
     {
-        user: {type: String, required: true},
+        userId: {type: String, required: true},
+        senderName:{type:String, required:true},
         receiverName:{type:String, required:true},
         paymentAmount: {type:Number, required:true},
+        paymentMethod:{type:String, required:true},
         products:[{
             id:String,
             name:String,
@@ -23,7 +25,8 @@ let paymentInfo = new Schema(
         deliveryFee:{type:Number, required:true},
         paidAt:{type:Date},
         paid:{type:Boolean, default:false},
-        merchantId:{type:String}
+        merchantId:{type:String},
+        delivered:{type:Boolean, default:false}
     }
 );
 

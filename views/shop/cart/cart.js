@@ -56,12 +56,20 @@ jQuery(document).ready(function ($) {
 
     function updateTotal() {
         let total = 0;
+        let count = 0;
         $('.cart_item').each(function (index, item) {
             let price = $(item).find('.total-price-each-item').text();
             // console.log(price)
 
             total += parseInt(price);
+            count ++;
         });
+
+        if(count < 1){
+            $('.final-pay-amount').text(0);
+            $('.delivery-fee').text(0);
+            return;
+        }
 
         if(parseInt(total) > 35000){
             $('.delivery-fee').text(0)
@@ -85,12 +93,16 @@ jQuery(document).ready(function ($) {
 
         $(this).parents('.cart_item').fadeTo('slow', 0, function () {
             $(this).remove();
+            updateTotal()
+
         });
 
         $.post('/api/shop/cart/remove_product', {productId}, function (sessionCart) {
             console.log('done')
             console.log(sessionCart)
-            updateTotal()
+            // setTimeout(function () {
+            //     updateTotal()
+            // }, 1000)
         });
     });
 });
@@ -166,8 +178,11 @@ $('.payment-anchor-kakao').click(function (e) {
     let email = $('#email').val();
     let phoneNumber = $('#phone-number').val();
     let deliveryFee = $('.delivery-fee').text();
+    let paymentMethod = 'kakao';
+    let senderName = $('#last-name-sender').val().trim() + $('#first-name-sender').val().trim();
 
-    $.post('/api/shop/cart/req_payment_info', {pointsUsed,
+    $.post('/api/shop/cart/req_payment_info', {
+        pointsUsed,
         receiverName,
         searchAddress,
         additionalAddress,
@@ -181,8 +196,8 @@ $('.payment-anchor-kakao').click(function (e) {
             pay_method : 'card',
             merchant_uid : new Date().getTime(),
             name : '주문',
-            amount:1000,
-            // amount : parseInt(paymentInfo.totalPrice),
+            // amount:1000,
+            amount : parseInt(paymentInfo.totalPrice),
             buyer_email : paymentInfo.buyer_email,
             buyer_name : paymentInfo.buyer_name,
             buyer_tel : paymentInfo.buyer_tel,
@@ -199,6 +214,8 @@ $('.payment-anchor-kakao').click(function (e) {
                 msg += '카드 승인번호 : ' + rsp.apply_num;
 
                 $.post('/api/shop/cart/payment_success', {
+                    senderName:senderName,
+                    paymentMethod:paymentMethod,
                     merchantId:rsp.merchant_uid,
                     paidAmount:rsp.paid_amount,
                     impId:rsp.imp_uid,
@@ -228,43 +245,120 @@ $('.payment-anchor-kakao').click(function (e) {
 $('.payment-anchor-naver').click(function (e) {
     e.preventDefault();
 
-    $.post('/api/shop/cart/req_payment_info', {}, function (paymentInfo) {
-        IMP.request_pay({
-            pg : 'naverco', // version 1.1.0부터 지원.
-            pay_method : 'card',
-            merchant_uid : 'merchant_' + paymentInfo.merchant_uid,
-            name : '주문',
-            amount : parseInt(paymentInfo.totalPrice),
-            buyer_email : paymentInfo.buyer_email,
-            buyer_name : paymentInfo.buyer_name,
-            buyer_tel : paymentInfo.buyer_tel,
-            buyer_addr : paymentInfo.buyer_addr,
-            buyer_postcode : paymentInfo.buyer_postcode,
-            m_redirect_url : 'https://www.yourdomain.com/payments/complete'
-        }, function(rsp) {
-            if ( rsp.success ) {
-                var msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-            } else {
-                var msg = '결제에 실패하였습니다.';
-                msg += '에러내용 : ' + rsp.error_msg;
+    $.post('/api/shop/cart/request_payment_info/naver', {}, function (paymentInfo) {
+
+    });
+
+    IMP.request_pay({
+        pg : 'naverco',
+        pay_method : 'card', //연동되지 않습니다. 네이버페이 결제창 내에서 결제수단을 구매자가 직접 선택하게 됩니다.
+        merchant_uid : 'merchant_' + new Date().getTime(), //상점에서 관리하시는 고유 주문번호를 전달
+        name : '주문명:결제테스트',
+        amount : 14000,
+        buyer_email : 'iamport@siot.do',
+        buyer_name : '구매자이름',
+        buyer_tel : '010-1234-5678', //누락되면 이니시스 결제창에서 오류
+        buyer_addr : '서울특별시 강남구 삼성동',
+        buyer_postcode : '123-456',
+        naverProducts : [
+            {
+                id : "singleProductId",
+                name : "네이버페이 상품1",
+                basePrice : 1000,
+                taxType : 'FREE', //TAX or FREE
+                quantity : 2,
+                infoUrl : "http://www.iamport.kr/product/detail",
+                imageUrl : "http://www.iamport.kr/product/detail/thumbnail",
+                shipping : {
+                    groupId : "",
+                    method : "DELIVERY", //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
+                    baseFee : 0,
+                    feeType : "FREE", //FREE(무료), CHARGE(유료), CONDITIONAL_FREE(조건부 무료), CHARGE_BY_QUANTITY(수량별 부과)
+                    feePayType : "FREE" //FREE(무료), PREPAYED(선불), CASH_ON_DELIVERY(착불)
+                }
+            },
+            {
+                id : "optionProductId",
+                name : "네이버페이 상품2",
+                basePrice : 1000,
+                taxType : 'FREE', //TAX or FREE
+                infoUrl : "http://www.iamport.kr/product/detail",
+                imageUrl : "http://www.iamport.kr/product/detail/thumbnail",
+                options : [ //네이버페이 상품2에 대해서 빨강-170mm사이즈 3개와 빨강-180mm사이즈 2개: 총 5개 구매
+                    {
+                        optionQuantity : 3,
+                        optionPrice : 100,
+                        selectionCode : "R_�M",
+                        selections : [
+                            {
+                                code : "RED",
+                                label : "색상",
+                                value : "빨강"
+                            },
+                            {
+                                code : "170",
+                                label : "사이즈",
+                                value : "170"
+                            }
+                        ]
+                    },
+                    {
+                        optionQuantity : 2,
+                        optionPrice : 200,
+                        selectionCode : "R_L",
+                        selections : [
+                            {
+                                code : "RED",
+                                label : "색상",
+                                value : "빨강"
+                            },
+                            {
+                                code : "180",
+                                label : "사이즈",
+                                value : "180"
+                            }
+                        ]
+                    }
+                ],
+                shipping : {
+                    groupId : "",
+                    method : "DELIVERY", //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
+                    baseFee : 3000,
+                    feeType : "FREE", //FREE(무료), CHARGE(유료), CONDITIONAL_FREE(조건부 무료), CHARGE_BY_QUANTITY(수량별 부과)
+                    feePayType : "FREE" //FREE(무료), PREPAYED(선불), CASH_ON_DELIVERY(착불)
+                }
             }
-            alert(msg);
-        });
+        ]
     });
 });
 
 $('.payment-anchor-card').click(function (e) {
     e.preventDefault();
 
-    $.post('/api/shop/cart/req_payment_info', {}, function (paymentInfo) {
+    let pointsUsed = parseInt($('.points-to-use').text());
+    let receiverName = $('#last-name-receiver').val().trim() + $('#first-name-sender').val().trim();
+    let searchAddress = $('#register-form-address').val();
+    let additionalAddress = $('#register-form-additional-address').val();
+    let postCode = $('#register-form-post-code').val();
+    let email = $('#email').val();
+    let phoneNumber = $('#phone-number').val();
+    let deliveryFee = $('.delivery-fee').text();
+    let paymentMethod = 'card';
+    let senderName = $('#last-name-sender').val().trim() + $('#first-name-sender').val().trim();
+
+    $.post('/api/shop/cart/req_payment_info', {pointsUsed,
+        receiverName,
+        searchAddress,
+        additionalAddress,
+        email,
+        phoneNumber,
+        deliveryFee,
+        postCode
+    }, function (paymentInfo) {
         IMP.request_pay({
-            pg : 'danal', // version 1.1.0부터 지원.
+            pg : 'danal_tpay', // version 1.1.0부터 지원.
             pay_method : 'card',
-            merchant_uid : 'merchant_' + paymentInfo.merchant_uid,
+            merchant_uid : new Date().getTime(),
             name : '주문',
             amount : parseInt(paymentInfo.totalPrice),
             buyer_email : paymentInfo.buyer_email,
@@ -272,19 +366,98 @@ $('.payment-anchor-card').click(function (e) {
             buyer_tel : paymentInfo.buyer_tel,
             buyer_addr : paymentInfo.buyer_addr,
             buyer_postcode : paymentInfo.buyer_postcode,
-            m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+            // m_redirect_url : `localhost:3000/shop/cart/paid`,
         }, function(rsp) {
             if ( rsp.success ) {
-                var msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
+                $.post('/api/shop/cart/payment_success', {
+                    senderName:senderName,
+                    paymentMethod:paymentMethod,
+                    merchantId:rsp.merchant_uid,
+                    paidAmount:rsp.paid_amount,
+                    impId:rsp.imp_uid,
+                    paymentId:rsp.apply_num,
+                    pointsUsed: pointsUsed,
+                    receiverName:receiverName,
+                    searchAddress:searchAddress,
+                    additionalAddress:additionalAddress,
+                    email:email,
+                    phoneNumber:phoneNumber,
+                    deliveryFee:deliveryFee,
+                    postCode:postCode
+                }, function (returnResult) {
+                    console.log('last return');
+                    location.href = `/shop/cart/paid/?id=${returnResult.paymentInfoId}`
+                })
             } else {
                 var msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
+                alert(msg);
             }
-            alert(msg);
+        });
+    });
+});
+
+$('.payment-anchor-phone').click(function (e) {
+    e.preventDefault();
+
+    let pointsUsed = parseInt($('.points-to-use').text());
+    let receiverName = $('#last-name-receiver').val().trim() + $('#first-name-sender').val().trim();
+    let searchAddress = $('#register-form-address').val();
+    let additionalAddress = $('#register-form-additional-address').val();
+    let postCode = $('#register-form-post-code').val();
+    let email = $('#email').val();
+    let phoneNumber = $('#phone-number').val();
+    let deliveryFee = $('.delivery-fee').text();
+    let paymentMethod = 'phone';
+    let senderName = $('#last-name-sender').val().trim() + $('#first-name-sender').val().trim();
+
+    $.post('/api/shop/cart/req_payment_info', {pointsUsed,
+        receiverName,
+        searchAddress,
+        additionalAddress,
+        email,
+        phoneNumber,
+        deliveryFee,
+        postCode
+    }, function (paymentInfo) {
+        IMP.request_pay({
+            pg : 'danal', // version 1.1.0부터 지원.
+            pay_method : 'phone',
+            merchant_uid : new Date().getTime(),
+            name : '주문',
+            amount : parseInt(paymentInfo.totalPrice),
+            buyer_email : paymentInfo.buyer_email,
+            buyer_name : paymentInfo.buyer_name,
+            buyer_tel : paymentInfo.buyer_tel,
+            buyer_addr : paymentInfo.buyer_addr,
+            buyer_postcode : paymentInfo.buyer_postcode,
+            // m_redirect_url : `localhost:3000/shop/cart/paid`,
+        }, function(rsp) {
+            if ( rsp.success ) {
+                $.post('/api/shop/cart/payment_success', {
+                    senderName:senderName,
+                    paymentMethod:paymentMethod,
+                    merchantId:rsp.merchant_uid,
+                    paidAmount:rsp.paid_amount,
+                    impId:rsp.imp_uid,
+                    paymentId:rsp.apply_num,
+                    pointsUsed: pointsUsed,
+                    receiverName:receiverName,
+                    searchAddress:searchAddress,
+                    additionalAddress:additionalAddress,
+                    email:email,
+                    phoneNumber:phoneNumber,
+                    deliveryFee:deliveryFee,
+                    postCode:postCode
+                }, function (returnResult) {
+                    console.log('last return');
+                    location.href = `/shop/cart/paid/?id=${returnResult.paymentInfoId}`
+                })
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+                alert(msg);
+            }
         });
     });
 });

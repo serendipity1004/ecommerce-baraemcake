@@ -13,7 +13,8 @@ let userSchema = new Schema({
     additionalAddress:{type:String},
     postCode:{type:String},
     verified:{type: Boolean, required:true, default:false},
-    verificationHash:{type:String}
+    verificationHash:{type:String},
+    authority:{type:String, default:'customer'}
 });
 
 let User = mongoose.model('User', userSchema);
