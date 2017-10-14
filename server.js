@@ -90,7 +90,7 @@ app.set('view engine', 'handlebars');
 app.use((req, res, next) => {
     res.locals.login = req.isAuthenticated();
 
-    Product.find({}, '_id name price largeImagePath overviewComments', (err, allProducts) => {
+    Product.find({}, '_id name price largeImagePath overviewComments', {sort:{'order': 1}}, (err, allProducts) => {
         if (err) throw err;
 
         res.locals.globalSlider = true;
@@ -101,6 +101,8 @@ app.use((req, res, next) => {
 
         res.locals.globalAllProducts = allProducts;
 
+        console.log(allProducts)
+
         if (!req.session.cart) {
             req.session.cart = {};
         }
@@ -109,10 +111,9 @@ app.use((req, res, next) => {
         let prodIds = Object.keys(sessionCart);
 
         if (prodIds.length > 0) {
-            Product.find({_id: {$in: prodIds}}, (err, productResult) => {
+            Product.find({_id: {$in: prodIds}}, {}, {sort:{'order':-1}}, (err, productResult) => {
                 console.log(err)
                 if (err) throw err;
-
 
                 for (let i = 0; i < productResult.length; i++) {
                     let curProduct = productResult[i];

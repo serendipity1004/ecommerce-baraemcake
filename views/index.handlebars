@@ -74,18 +74,16 @@
 
         {{#each globalAllProducts}}
             {{#if (evenOrNot @index)}}
-                <div class="section nobg topmargin-lg nobottommargin">
+                <div class="section nobg topmargin-lg nobottommargin" style="padding-top: 0 !important;">
                     <div class="container clearfix">
 
                         <div class="col_half nobottommargin center">
-
                             <img src="{{largeImagePath}}" alt="Image" data-animate="fadeInLeft">
-
                         </div>
 
                         <div class="col_half nobottommargin col_last">
 
-                            <div class="heading-block" style="padding-top: 40px;">
+                            <div class="heading-block">
 
                                 <h2 class="product-name-index-page">{{name}}</h2>
                                 <span class="product-price-index-page">&#8361; {{price}}</span>
@@ -103,33 +101,36 @@
                     </div>
                 </div>
             {{else}}
-                <div class="section nobg notopmargin noborder bottommargin-sm">
+                <div class="section nobg notopmargin noborder bottommargin-sm" style="padding-top: 0!important;">
                     <div class="container clearfix">
+                        <div class="row">
 
-                        <div class="col-md-6 col-md-push-6 bottommargin-sm center col_last">
+                            <div class="col-md-6 col-md-push-6 bottommargin-sm center col_last">
 
-                            <img src="{{largeImagePath}}" alt="Image" data-animate="fadeInRight">
-
-                        </div>
-
-                        <div class="col-md-6 col-md-pull-6 nobottommargin">
-
-                            <div class="heading-block" style="padding-top: 40px;">
-
-                                <h2 class="product-name-index-page">{{name}}</h2>
-                                <span class="product-price-index-page">&#8361; {{price}}</span>
+                                <img src="{{largeImagePath}}" alt="Image" data-animate="fadeInRight">
 
                             </div>
 
-                            <p>{{{onlyShowTwoLines overviewComments}}}</p>
+                            <div class="col-md-6 col-md-pull-6 nobottommargin">
 
-                            <a href="/shop/details/?id={{_id}}"
-                               class="button button-border button-large button-rounded topmargin-sm noleftmargin">구경하러
-                                가기</a>
+                                <div class="heading-block">
+
+                                    <h2 class="product-name-index-page">{{name}}</h2>
+                                    <span class="product-price-index-page">&#8361; {{price}}</span>
+
+                                </div>
+
+                                <p>{{{onlyShowTwoLines overviewComments}}}</p>
+
+                                <a href="/shop/details/?id={{_id}}"
+                                   class="button button-border button-large button-rounded topmargin-sm noleftmargin">구경하러
+                                    가기</a>
+
+                            </div>
 
                         </div>
-
                     </div>
+
                 </div>
             {{/if}}
         {{/each}}

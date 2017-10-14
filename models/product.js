@@ -17,7 +17,8 @@ let productSchema = new Schema(
         additionalInfo: {
             quantity: Number,
             weight: Number,
-        }
+        },
+        order:{type:Number}
     });
 
 let Product = mongoose.model('Product', productSchema);
