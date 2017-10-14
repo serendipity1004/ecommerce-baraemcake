@@ -101,8 +101,9 @@ if (/Mobi/.test(navigator.userAgent)) {
     jQuery('#top-typed').text('맛있으니까 바램떡이다');
 }else{
     let typed = new Typed('#why-baraem-header', {
-        strings:['바램떡 이여야만 하는 이유', '맛있으니까 ^200'],
+        strings:['맛있으니까 바램떡이다', '안전하니까 바램떡이다'],
         typeSpeed:100,
+        smartBackspace: true,
         backSpeed:50,
         loop:true,
         showCursor:false,
@@ -110,7 +111,7 @@ if (/Mobi/.test(navigator.userAgent)) {
     });
 
     let topTyped = new Typed('#top-typed', {
-        strings:['맛있으니까 바램떡이다'],
+        strings:['맛있으니까 바램떡이다', '안전하니까 바램떡이다'],
         typeSpeed:100,
         backSpeed:50,
         loop:true,
