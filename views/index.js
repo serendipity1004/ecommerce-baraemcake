@@ -97,7 +97,7 @@ jQuery('#top-banner').click(function () {
     return false;
 });
 if (/Mobi/.test(navigator.userAgent)) {
-    jQuery('#why-baraem-header').text('바램떡이여야만 하는 이유 <br/>맛있으니까');
+    jQuery('#why-baraem-header').text('바램떡이여야만 하는 이유 맛있으니까');
     jQuery('#top-typed').text('맛있으니까 바램떡이다');
 }else{
     let typed = new Typed('#why-baraem-header', {

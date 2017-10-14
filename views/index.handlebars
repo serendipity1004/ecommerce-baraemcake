@@ -74,28 +74,32 @@
 
         {{#each globalAllProducts}}
             {{#if (evenOrNot @index)}}
-                <div class="section nobg topmargin-lg nobottommargin" style="padding-top: 0 !important;">
+                <div class="section nobg notopmargin bottommargin-sm" style="padding-top: 0 !important;">
                     <div class="container clearfix">
 
-                        <div class="col_half nobottommargin center">
-                            <img src="{{largeImagePath}}" alt="Image" data-animate="fadeInLeft">
-                        </div>
+                        <div class="row">
 
-                        <div class="col_half nobottommargin col_last">
-
-                            <div class="heading-block" style="margin-bottom: 25px !important;">
-
-                                <h2 class="product-name-index-page">{{name}}</h2>
-                                <span class="product-price-index-page">&#8361; {{price}}</span>
-
+                            <div class="col-md-6 bottommargin-sm center col_last">
+                                <img src="{{largeImagePath}}" alt="Image" data-animate="fadeInLeft">
                             </div>
 
-                            <p>{{{onlyShowTwoLines overviewComments}}}</p>
+                            <div class="col-md-6 nobottommargin">
 
-                            <a href="/shop/details/?id={{_id}}"
-                               class="button button-border button-large button-rounded topmargin-sm noleftmargin" style="margin-top: 0 !important;">구경하러
-                                가기</a>
+                                <div class="heading-block" style="margin-bottom: 25px !important;">
 
+                                    <h2 class="product-name-index-page">{{name}}</h2>
+                                    <span class="product-price-index-page">&#8361; {{price}}</span>
+
+                                </div>
+
+                                <p>{{{onlyShowTwoLines overviewComments}}}</p>
+
+                                <a href="/shop/details/?id={{_id}}"
+                                   class="button button-border button-large button-rounded topmargin-sm noleftmargin"
+                                   style="margin-top: 0 !important;">구경하러
+                                    가기</a>
+
+                            </div>
                         </div>
 
                     </div>
@@ -123,7 +127,8 @@
                                 <p>{{{onlyShowTwoLines overviewComments}}}</p>
 
                                 <a href="/shop/details/?id={{_id}}"
-                                   class="button button-border button-large button-rounded topmargin-sm noleftmargin" style="margin-top: 0 !important;">구경하러
+                                   class="button button-border button-large button-rounded topmargin-sm noleftmargin"
+                                   style="margin-top: 0 !important;">구경하러
                                     가기</a>
 
                             </div>
