@@ -114,7 +114,7 @@ let topTyped = new Typed('#top-typed', {
     loop: true,
     showCursor: false,
     backDelay: 1500
-}
+});
 
 
 // jQuery(document).ready(function ($) {
