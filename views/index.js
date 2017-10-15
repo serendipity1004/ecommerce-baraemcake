@@ -15,7 +15,7 @@ jQuery('.add-to-cart').click(function (e) {
         itemQuantity: 1
     }, function (result) {
         setTimeout(function () {
-            clickedBtn.attr('disabled',false);
+            clickedBtn.attr('disabled', false);
             target.removeClass('running')
         }, 500);
     })
@@ -96,28 +96,24 @@ jQuery('#top-banner').click(function () {
     }, 500);
     return false;
 });
-if (/Mobi/.test(navigator.userAgent)) {
-    jQuery('#why-baraem-header').text('바램떡이여야만 하는 이유 맛있으니까');
-    jQuery('#top-typed').text('맛있으니까 바램떡이다');
-}else{
-    let typed = new Typed('#why-baraem-header', {
-        strings:['맛있으니까 바램떡이다', '안전하니까 바램떡이다'],
-        typeSpeed:100,
-        smartBackspace: true,
-        backSpeed:50,
-        loop:true,
-        showCursor:false,
-        backDelay:1500
-    });
 
-    let topTyped = new Typed('#top-typed', {
-        strings:['맛있으니까 바램떡이다', '안전하니까 바램떡이다'],
-        typeSpeed:100,
-        backSpeed:50,
-        loop:true,
-        showCursor:false,
-        backDelay:1500
-    });
+let typed = new Typed('#why-baraem-header', {
+    strings: ['맛있으니까 바램떡이다', '안전하니까 바램떡이다'],
+    typeSpeed: 100,
+    smartBackspace: true,
+    backSpeed: 50,
+    loop: true,
+    showCursor: false,
+    backDelay: 1500
+});
+
+let topTyped = new Typed('#top-typed', {
+    strings: ['맛있으니까 바램떡이다', '안전하니까 바램떡이다'],
+    typeSpeed: 100,
+    backSpeed: 50,
+    loop: true,
+    showCursor: false,
+    backDelay: 1500
 }
 
 
