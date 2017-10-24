@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
 const User = require('../models/user');
+const PaymentInfo = require('../models/paymentInfo');
 
 const saltRounds = 10;
 
@@ -71,36 +72,45 @@ router.post('/new', (req, res) => {
                     console.log(err);
                     throw err;
                 }
-
-                let transporter = nodemailer.createTransport({
-                    host: 'smtp.gmail.com',
-                    port:465,
-                    secure:true,
-                    auth:{
-                        user:'customer.service@baraemcake.com',
-                        pass:'inscapbaby12#$'
+                req.login(user._id, function (err) {
+                    if (err) {
+                        return next(err);
                     }
-                });
-
-                let verificationUrl = `http://localhost:3000/login/verify_email/${urlEncodedVerificationHash}`;
-
-                let mailOptions = {
-                    from: '"Baraem Customer Service" <DO_NOT_REPLY@baraemcake.com>',
-                    to:email,
-                    subject: '바램떡 이메일 확인 입니다',
-                    html: '<strong>바램</strong>' +
-                    `<p>링크를 눌러서 이메일을 확인 해주세요</p> <p>${verificationUrl}</p>`
-                };
-
-                transporter.sendMail(mailOptions, (err, info) => {
-                    if(err) {
-                        throw err;
-                    }
-
-                    console.log('sent')
 
                     res.redirect('/')
-                })
+
+                });
+                // res.redirect('/')
+
+                // let transporter = nodemailer.createTransport({
+                //     host: 'smtp.gmail.com',
+                //     port:465,
+                //     secure:true,
+                //     auth:{
+                //         user:'customer.service@baraemcake.com',
+                //         pass:'inscapbaby12#$'
+                //     }
+                // });
+                //
+                // let verificationUrl = `http://localhost:3000/login/verify_email/${urlEncodedVerificationHash}`;
+                //
+                // let mailOptions = {
+                //     from: '"Baraem Customer Service" <DO_NOT_REPLY@baraemcake.com>',
+                //     to:email,
+                //     subject: '바램떡 이메일 확인 입니다',
+                //     html: '<strong>바램</strong>' +
+                //     `<p>링크를 눌러서 이메일을 확인 해주세요</p> <p>${verificationUrl}</p>`
+                // };
+                //
+                // transporter.sendMail(mailOptions, (err, info) => {
+                //     if(err) {
+                //         throw err;
+                //     }
+                //
+                //     console.log('sent')
+                //
+                //     res.redirect('/')
+                // })
             })
         })
     })
@@ -129,8 +139,18 @@ router.get('/profile', (req, res, next)=>{
     User.findById(req.user, '_id firstName lastName email searchAddress additionalAddress phoneNumber points',(err, result) => {
         if(err) throw err;
 
-        res.render('./login/profile/profile', {
-            user:result
+        PaymentInfo.find({userId:req.user}, '_id senderName receiverName paymentAmount paymentMethod products searchAddress additionalAddress postCode paidAt delivered', {limit: 10, sort:{paidAt:-1}}, (err, paymentResult) => {
+            if(err) throw err;
+
+            console.log('id')
+            console.log(req.user)
+            console.log(paymentResult)
+            res.render('./login/profile/profile', {
+                user:result,
+                paymentInfo:paymentResult,
+                js:['/login/profile/profile.js'],
+                css:['/login/profile/profile.css']
+            })
         })
     })
 });

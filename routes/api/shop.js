@@ -204,6 +204,7 @@ router.post('/cart/payment_success', (req, res) => {
                 usedPoints:pointsUsed,
                 deliveryFee:deliveryFee,
                 postCode:postCode,
+                paidAt:Date.now()
                 // merchantId:merchantId
             });
 

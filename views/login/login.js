@@ -85,6 +85,12 @@ jQuery('#login-form').validate({
     }
 });
 
+jQuery('#register-form-submit').on('click', function (e) {
+    $('body').css('visibility', 'hidden')
+
+    $('body').append('<h1>로딩중...</h1>')
+});
+
 jQuery('#register-form').validate({
     rules: {
         'register-form-last-name':{
@@ -157,6 +163,8 @@ jQuery('#register-form').validate({
         }
     },
     submitHandler: function (form) {
+        // $('body').css('visibility', 'none');
+
         form.submit();
 
         //

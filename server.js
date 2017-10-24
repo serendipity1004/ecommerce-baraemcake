@@ -61,6 +61,7 @@ const port = process.env.PORT || 3000;
 let app = express();
 
 let mongoose = require('mongoose');
+mongoose.Promise = Promise;
 mongoose.connect('mongodb://127.0.0.1:27017/baraemcake');
 
 const sessionMiddleware = session({
@@ -100,8 +101,6 @@ app.use((req, res, next) => {
         }
 
         res.locals.globalAllProducts = allProducts;
-
-        console.log(allProducts)
 
         if (!req.session.cart) {
             req.session.cart = {};
@@ -216,4 +215,12 @@ hbs.registerHelper('onlyShowOneLine', (text) => {
     }
 
     return newArr.join('<br/>')
+});
+
+hbs.registerHelper('convertDelivered', (text) => {
+    if(text){
+        return '배송됨';
+    }else{
+        return '배송 준비중';
+    }
 });

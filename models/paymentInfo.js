@@ -23,7 +23,7 @@ let paymentInfo = new Schema(
         phoneNumber:{type:String, required:true},
         usedPoints:{type:Number, required:true},
         deliveryFee:{type:Number, required:true},
-        paidAt:{type:Date},
+        paidAt:{type:Date, require:true},
         paid:{type:Boolean, default:false},
         merchantId:{type:String},
         delivered:{type:Boolean, default:false}
