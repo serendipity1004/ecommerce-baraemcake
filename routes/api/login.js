@@ -5,6 +5,7 @@ const nodemailer = require('nodemailer');
 
 //Models
 const User = require('../../models/user');
+const PaymentInfo = require('../../models/paymentInfo');
 
 const saltRounds = 10;
 
@@ -21,6 +22,14 @@ router.post('/new/verify', (req, res) => {
         }else {
             res.json({exists:false})
         }
+    })
+});
+
+router.get('/profile/get/orders', (req, res) => {
+    PaymentInfo.find({userId:req.user}, (err, paymentInfo) => {
+        console.log('payment info')
+        console.log(paymentInfo)
+        res.json({data:paymentInfo})
     })
 });
 
