@@ -46,7 +46,8 @@
                             <!-- Product Single - Rating
                             ============================================= -->
                             <div class="product-price" style="float: right;">
-                                <strike>&#8361; {{origPrice}}</strike> &#8361; {{price}} <span style="font-size: small; color: #f44242;">{{points}}% 적립</span>
+                                <strike class="grey">&#8361; {{priceComma origPrice}}</strike> &#8361; {{priceComma price}} <span
+                                    style="font-size: small; color: #f44242;">{{points}}% 적립</span>
 
                             </div><!-- Product Single - Rating End -->
 
@@ -90,8 +91,7 @@
                                 <div class="panel-body">
                                     <span itemprop="productID" class="sku_wrapper">제품 ID: <span
                                             class="sku">{{_id}}</span></span>
-                                    <span class="posted_in">박스내 수량: <span class="sku">{{additionalInfo.quantity}}
-                                        개</span></span>
+                                    <span class="posted_in">박스내 수량: <span class="sku">{{additionalInfo.quantity}}개</span></span>
                                     <span class="tagged_as">개당 무게: <span
                                             class="sku">{{additionalInfo.weight}}g</span></span>
                                 </div>
@@ -164,11 +164,11 @@
                             </div>
 
                             <!--<div class="feature-box fbox-plain fbox-dark fbox-small">-->
-                                <!--<div class="fbox-icon">-->
-                                    <!--<i class="icon-undo"></i>-->
-                                <!--</div>-->
-                                <!--<h3>포인트 적립 시스템</h3>-->
-                                <!--<p class="notopmargin">바램떡을 구매하실때마다 다음 구매시 사용할수 있는 포인트를 적립해 드립니다.</p>-->
+                            <!--<div class="fbox-icon">-->
+                            <!--<i class="icon-undo"></i>-->
+                            <!--</div>-->
+                            <!--<h3>포인트 적립 시스템</h3>-->
+                            <!--<p class="notopmargin">바램떡을 구매하실때마다 다음 구매시 사용할수 있는 포인트를 적립해 드립니다.</p>-->
                             <!--</div>-->
 
                         </div>
@@ -254,6 +254,68 @@
                             <div style="font-size: 1.6em;">
                                 <p>택배를 받은 후 바로 드시지 않을 경우에는 냉동 보관해 주십시요</p>
                                 <p>드실 양만큼 따로 덜어 내어 상온에서 20~30분 자연 해동해서 드시면 더욱 맛있습니다</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="full-width full-screen dark"
+                 style="background-color: #290B0B">
+
+                <div class="container clearfix"
+                     style="display: flex; justify-content: center; flex-direction: column; height: inherit;">
+                    <div style="display: flex; justify-content: center;">
+                        <div class="col_full">
+                            <div class="title-block" style="margin-bottom: 90px;">
+                                <h1>상품 <span>상세</span>정보</h1>
+                            </div>
+                            <div style="font-size: 1.6em;">
+                                <table class="table table-bordered table-responsive">
+                                    <tr>
+                                        <th>상품명</th>
+                                        <td>{{nutritionalInfo.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>상품의 유형</th>
+                                        <td>{{nutritionalInfo.type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>생산자</th>
+                                        <td>{{nutritionalInfo.producer}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>유통기한</th>
+                                        <td>{{nutritionalInfo.bestBefore}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>포장 단위별 중량 및 수량</th>
+                                        <td>{{nutritionalInfo.weightAndQuant}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>원재료명 및 함량</th>
+                                        <td>{{nutritionalInfo.materials}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>영양표시 대상여부</th>
+                                        <td>{{nutritionalInfo.showOrNot.nutrition}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>유전자 재조합 식품여부</th>
+                                        <td>{{nutritionalInfo.showOrNot.genetic}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>특수 용도 식품 (영유아식, 체중 조절식품) 여부</th>
+                                        <td>{{nutritionalInfo.showOrNot.specialUse}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>수입식품 여부</th>
+                                        <td>{{nutritionalInfo.showOrNot.imported}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>소비자 상담 관련 전화번호</th>
+                                        <td>{{nutritionalInfo.phone}}</td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -71,7 +71,7 @@ const sessionMiddleware = session({
     }),
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }
+    cookie: {maxAge: 24 * 60 * 60 * 1000}
 });
 
 app.use(sessionMiddleware);
@@ -91,16 +91,18 @@ app.set('view engine', 'handlebars');
 app.use((req, res, next) => {
     res.locals.login = req.isAuthenticated();
 
-    Product.find({}, '_id name price largeImagePath overviewComments', {sort:{'order': 1}}, (err, allProducts) => {
+    Product.find({}, '_id name origPrice price largeImagePath overviewComments', {sort: {'order': 1}}, (err, allProducts) => {
         if (err) throw err;
 
         res.locals.globalSlider = true;
 
-        if(req.url.startsWith('/shop/details') || req.url.startsWith('/shop/cart') || req.url.startsWith('/profile') || req.url.startsWith('/login') || req.url.startsWith('/admin') || req.url.endsWith('/shop/') || req.url.endsWith('/shop')){
+        if (req.url.startsWith('/shop/details') || req.url.startsWith('/shop/cart') || req.url.startsWith('/profile') || req.url.startsWith('/login') || req.url.startsWith('/admin') || req.url.endsWith('/shop/') || req.url.endsWith('/shop')) {
             res.locals.globalSlider = false;
         }
 
         res.locals.globalAllProducts = allProducts;
+
+        console.log(allProducts)
 
         if (!req.session.cart) {
             req.session.cart = {};
@@ -110,7 +112,7 @@ app.use((req, res, next) => {
         let prodIds = Object.keys(sessionCart);
 
         if (prodIds.length > 0) {
-            Product.find({_id: {$in: prodIds}}, {}, {sort:{'order':-1}}, (err, productResult) => {
+            Product.find({_id: {$in: prodIds}}, {}, {sort: {'order': -1}}, (err, productResult) => {
                 console.log(err)
                 if (err) throw err;
 
@@ -152,6 +154,12 @@ app.get('/', (req, res) => {
 
     Product.find({}, (err, result) => {
         if (err) throw err;
+
+        console.log('getting products')
+
+        for (let i = 0; i < result.length; i++) {
+            console.log(result[i].origPrice);
+        }
 
         res.render('./index', {
             slideRevolution: true,
@@ -197,10 +205,10 @@ hbs.registerHelper('newLineToHtml', (text) => {
     return text.replace(/\\n/g, '<br/>')
 });
 
-hbs.registerHelper('onlyShowTwoLines', (text) =>{
+hbs.registerHelper('onlyShowTwoLines', (text) => {
     let newArr = text.split(/\\n/g);
 
-    if(newArr.length > 2){
+    if (newArr.length > 2) {
         newArr.splice(2, newArr.length - 2)
     }
 
@@ -210,7 +218,7 @@ hbs.registerHelper('onlyShowTwoLines', (text) =>{
 hbs.registerHelper('onlyShowOneLine', (text) => {
     let newArr = text.split(/\\n/g);
 
-    if(newArr.length > 1){
+    if (newArr.length > 1) {
         newArr.splice(1, newArr.length - 1)
     }
 
@@ -218,9 +226,13 @@ hbs.registerHelper('onlyShowOneLine', (text) => {
 });
 
 hbs.registerHelper('convertDelivered', (text) => {
-    if(text){
+    if (text) {
         return '배송됨';
-    }else{
+    } else {
         return '배송 준비중';
     }
 });
+
+hbs.registerHelper('priceComma', (price) => {
+    return price.toLocaleString();
+})

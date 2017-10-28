@@ -16,7 +16,12 @@ input{
     color:#9E9E9E;
 }
 
-strike{
-    color:#FFAB91;
+strike.grey{
+    color:#9E9E9E !important;
     font-size: 80%;
+}
+
+strike.orange{
+    color:#FFAB91 !important;
+    font-size: 80% !important;
 }

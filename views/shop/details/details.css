@@ -1,3 +1,7 @@
 .product-price{
     color: #290B0B !important;
 }
+
+td{
+    width:50%;
+}

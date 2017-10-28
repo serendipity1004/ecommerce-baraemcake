@@ -32,6 +32,9 @@ router.get('/details', (req, res) => {
     Product.findById(prodId, (err, prodResult) => {
         if(err) throw err;
 
+        console.log('products')
+        console.log(prodResult);
+
         res.render('./shop/details/details', {
             slideRevolution: false,
             product:prodResult,
