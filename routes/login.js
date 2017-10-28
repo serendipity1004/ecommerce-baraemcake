@@ -34,7 +34,6 @@ router.get('/logout', (req, res)=>{
     res.redirect('/')
 });
 
-
 router.get('/new', (req, res) => {
     console.log(req.body)
     let lastName = req.body['register-form-last-name'];

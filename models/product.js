@@ -7,6 +7,7 @@ let productSchema = new Schema(
         group: {type: String, required: true},
         category: [String],
         price: {type: Number, required: true},
+        origPrice:{type:Number},
         salePrice:{type:Number},
         largeImagePath: {type: String, required: true},
         detailsImagePath: [String],
