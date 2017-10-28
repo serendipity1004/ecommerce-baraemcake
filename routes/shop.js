@@ -113,4 +113,37 @@ router.get('/cart/paid', (req, res) => {
     })
 });
 
+router.get('/cart/paid/recent', (req, res) => {
+    let id = req.user;
+
+    PaymentInfo.find({userId:id}, {}, {sort:{paidAt:-1}, limit:1}, (err, paymentResult) => {
+        if(err) throw err;
+        let paymentInfoResult = paymentResult[0];
+
+        let products = paymentInfoResult.products;
+        let productQuant = {};
+        let productIds = [];
+
+        for(let i =0; i < products.length; i ++){
+            productIds.push(products[i].id);
+            productQuant[products[i].id] = products[i].quantity;
+        }
+
+        Product.find({_id:{$in:productIds}}, (err, productResult) => {
+            if(err) throw err;
+
+            for(let i =0; i < productResult.length; i++){
+                productResult[i]['quantity'] = productQuant[productResult[i]._id]
+            }
+
+            res.render('./shop/cart/paid/paid', {
+                js:['/shop/cart/paid/paid.js'],
+                css:['/shop/cart/paid/paid.css'],
+                cartProducts:productResult,
+                paymentInfo:paymentInfoResult
+            })
+        })
+    })
+});
+
 module.exports = router;

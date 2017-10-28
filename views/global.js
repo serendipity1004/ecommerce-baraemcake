@@ -1,14 +1,16 @@
+'use strict';
+
 jQuery(document).ready(function ($) {
     $('#top-login').validate({
         rules: {
-            username:{
+            username: {
                 required: true,
                 email: true
             },
-            password:{
-                required:true,
+            password: {
+                required: true,
                 minlength: 8,
-                maxlength: 16,
+                maxlength: 16
             }
         },
         messages: {
@@ -22,7 +24,7 @@ jQuery(document).ready(function ($) {
                 maxlength: '최대 16글자를 입력해주세요'
             }
         },
-        submitHandler: function (form) {
+        submitHandler: function submitHandler(form) {
             form.submit();
         }
     });
@@ -30,22 +32,72 @@ jQuery(document).ready(function ($) {
     $('#header-logout-btn').click(function (e) {
         e.preventDefault();
 
-        $.post('/login/logout', {
-
-        }, function (result) {
-            location.href = '/'
-        })
+        $.post('/login/logout', {}, function (result) {
+            window.location.href = '/';
+        });
     });
 
     $('#header-register-btn').click(function (e) {
         e.preventDefault();
 
-        location.href = '/login'
-    })
+        window.location.href = '/login';
+    });
 
     // $('#header-cart-btn').click(function (e) {
     //     e.preventDefault();
     //
-    //     location.href = '/shop/cart'
+    //     window.location.href = '/shop/cart'
     // })
 });
+
+// jQuery(document).ready(function ($) {
+//     $('#top-login').validate({
+//         rules: {
+//             username:{
+//                 required: true,
+//                 email: true
+//             },
+//             password:{
+//                 required:true,
+//                 minlength: 8,
+//                 maxlength: 16,
+//             }
+//         },
+//         messages: {
+//             username: {
+//                 required: '정확한 이메일 주소를 입력해주세요',
+//                 email: '이메일 형식이 잘못되었습니다'
+//             },
+//             password: {
+//                 required: '비밀번호를 입력해주세요',
+//                 minlength: '최소 8글자를 입력해주세요',
+//                 maxlength: '최대 16글자를 입력해주세요'
+//             }
+//         },
+//         submitHandler: function (form) {
+//             form.submit();
+//         }
+//     });
+//
+//     $('#header-logout-btn').click(function (e) {
+//         e.preventDefault();
+//
+//         $.post('/login/logout', {
+//
+//         }, function (result) {
+//             window.location.href = '/'
+//         })
+//     });
+//
+//     $('#header-register-btn').click(function (e) {
+//         e.preventDefault();
+//
+//         window.location.href = '/login'
+//     })
+//
+//     // $('#header-cart-btn').click(function (e) {
+//     //     e.preventDefault();
+//     //
+//     //     window.location.href = '/shop/cart'
+//     // })
+// });
