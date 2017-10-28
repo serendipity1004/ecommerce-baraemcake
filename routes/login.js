@@ -34,6 +34,58 @@ router.get('/logout', (req, res)=>{
     res.redirect('/')
 });
 
+
+router.get('/new', (req, res) => {
+    console.log(req.body)
+    let lastName = req.body['register-form-last-name'];
+    let firstName = req.body['register-form-first-name'];
+    let email = req.body['register-form-email'];
+    let searchAddress = req.body['register-form-address'];
+    let additionalAddress = req.body['register-form-additional-address'];
+    let postCode = req.body['register-form-post-code'];
+    let phoneNumber = req.body['register-form-phone'];
+    let password = req.body['register-form-password'];
+
+    console.log('received')
+
+    bcrypt.hash(email + Date.now(), 10, (err, verificationHash) => {
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+            if(err) {
+                throw err;
+            }
+
+            let user = new User({
+                lastName,
+                firstName,
+                email,
+                searchAddress,
+                additionalAddress,
+                postCode,
+                phoneNumber,
+                password:hash,
+                verificationHash
+            });
+
+            let urlEncodedVerificationHash = encodeURIComponent(verificationHash);
+
+            user.save((err, userSaveResult) => {
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
+                req.login(user._id, function (err) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    res.redirect('/')
+
+                });
+            })
+        })
+    })
+});
+
 router.post('/new', (req, res) => {
     console.log(req.body)
     let lastName = req.body['register-form-last-name'];
@@ -80,37 +132,6 @@ router.post('/new', (req, res) => {
                     res.redirect('/')
 
                 });
-                // res.redirect('/')
-
-                // let transporter = nodemailer.createTransport({
-                //     host: 'smtp.gmail.com',
-                //     port:465,
-                //     secure:true,
-                //     auth:{
-                //         user:'customer.service@baraemcake.com',
-                //         pass:'inscapbaby12#$'
-                //     }
-                // });
-                //
-                // let verificationUrl = `http://localhost:3000/login/verify_email/${urlEncodedVerificationHash}`;
-                //
-                // let mailOptions = {
-                //     from: '"Baraem Customer Service" <DO_NOT_REPLY@baraemcake.com>',
-                //     to:email,
-                //     subject: '바램떡 이메일 확인 입니다',
-                //     html: '<strong>바램</strong>' +
-                //     `<p>링크를 눌러서 이메일을 확인 해주세요</p> <p>${verificationUrl}</p>`
-                // };
-                //
-                // transporter.sendMail(mailOptions, (err, info) => {
-                //     if(err) {
-                //         throw err;
-                //     }
-                //
-                //     console.log('sent')
-                //
-                //     res.redirect('/')
-                // })
             })
         })
     })

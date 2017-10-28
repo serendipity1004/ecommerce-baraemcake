@@ -168,25 +168,6 @@ jQuery('#register-form').validate({
         // $('body').css('visibility', 'none');
 
         form.submit();
-
-        //
-        // console.log('sending')
-        // $.post('/api/login/new', {
-        //     lastName,
-        //     firstName,
-        //     email,
-        //     address,
-        //     additionalAddress,
-        //     postCode,
-        //     phoneNumber,
-        //     password
-        // }, function (result) {
-        //     if(result.error){
-        //         console.log('error')
-        //     }else {
-        //         console.log('account created')
-        //     }
-        // })
     }
 });
 
