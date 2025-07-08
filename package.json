@@ -14,7 +14,7 @@
     "glob": "^7.1.2",
     "handlebars": "^4.0.10",
     "jquery": "^3.2.1",
-    "mongoose": "^4.11.8",
+    "mongoose": "^6.13.6",
     "nodemailer": "^4.1.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
