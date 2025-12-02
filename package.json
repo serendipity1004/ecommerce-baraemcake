@@ -15,7 +15,7 @@
     "handlebars": "^4.0.10",
     "jquery": "^3.2.1",
     "mongoose": "^4.11.8",
-    "nodemailer": "^4.1.0",
+    "nodemailer": "^7.0.11",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "typed.js": "^2.0.5"
